@@ -8,8 +8,6 @@ google.charts.setOnLoadCallback(()=>{
 });
 
 
-
-
 var data = {
     messages: []
   };
@@ -134,6 +132,15 @@ var data = {
     else if(jsonMessage.uid === 'hue_1'){
       iotObject = new Hue(jsonMessage);
     }
+    else if(jsonMessage.uid === 'arduino_due_1'){
+      iotObject = new Ardunio(jsonMessage);
+    }
+    else if(jsonMessage.uid === 'axis_old_camera'){
+      iotObject = new CameraAxis(jsonMessage);
+    }
+    else if(jsonMessage.uid === 'person_count'){
+      iotObject = new PersonCount(jsonMessage);
+    }
     else{
 
       iotObject = { toString: function(){
@@ -186,17 +193,47 @@ var data = {
     this.timestamp = json.timestamp;
     this.state = json.command.blind_state;
     this.toString = function(){
-      var message = this.state === 'close';
-      return message ? "The blinds are " + this.state + "d" : "The blinds are " + this.state;  
+      return this.state === 'close' ? "The blinds are " + this.state + "d" : "The blinds are " + this.state;  
     }
   }
 
   function Hue(json){
-    this.timestamp = timestamp;
+    this.timestamp = json.timestamp;
     this.powerState = json.command.powerState;
     this.brightness = json.command.brightness;
     this.toString = function(){
       return "The lights are " + this.powerState + " and set to " + this.brightness + "%";
+    }
+  }
+
+  function Ardunio(json){
+    this.timestamp = json.timestamp;
+    this.soundLevel = json.data.sound_level;
+    this.lightLevel = json.data.x_light_level;
+    this.temperature = json.data.temperature;
+    this.humidity = json.data.humidity;
+
+    this.toString = function(){
+      return "The Ardunio light level: " + this.lightLevel + ", tempature: " + this.temperature + " and humidity: " + this.humidity + ". The sound level are " + this.soundLevel; 
+    }
+  }
+
+  function CameraAxis(json){
+    this.timestamp = json.timestamp;
+    this.audioAlarm = json.data.audio_alarm;
+
+    this.toString = function(){
+      return "The old Camera Axis Audio Alarm set to " + this.audioAlarm; 
+    }
+  }
+
+  function PersonCount(json){
+    this.timestamp = json.timestamp;
+    this.count = json.data.count;
+    this.predAccuracy = json.data.pred_accuracy;
+
+    this.toString = function(){
+      return "There are " + this.count + " in the lab. With an accuracy on "  + this.predAccuracy + " %";
     }
   }
 
