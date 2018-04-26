@@ -141,6 +141,12 @@ var data = {
     else if(jsonMessage.uid === 'person_count'){
       iotObject = new PersonCount(jsonMessage);
     }
+    else if(jsonMessage.uid === 'cameraACCC8E7E6E9F'){
+      iotObject = new InAndOut(jsonMessage);
+    }
+    else if(jsonMessage.uid === 'eye_contact_1'){
+      iotObject = new EyeContact(jsonMessage);
+    }
     else{
 
       iotObject = { toString: function(){
@@ -234,6 +240,26 @@ var data = {
 
     this.toString = function(){
       return "There are " + this.count + " in the lab. With an accuracy on "  + this.predAccuracy + " %";
+    }
+  }
+
+  function InAndOut(json){
+    this.timestamp = json.timestamp;
+    this.movementDirection = json.data.movement_direction;
+
+    this.toString = function(){
+      return "Camera ACC8E7E6EAF recorded a movement " + this.movementDirection;
+    }
+  }
+
+  function EyeContact(json){
+    this.timestamp = json.timestamp;
+    this.lookingAtCamera = json.data.looking_towards_camera;
+    this.eyeContacs = json.data.eye_contacs;
+    this.detectedFaces = json.data.detected_faces;
+
+    this.toString = function(){
+      return "Faces detected " + this.detectedFaces + ". Looking at the camera " + this.lookingAtCamera + ", eye contacs " + this.eyeContacs;
     }
   }
 
