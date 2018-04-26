@@ -1,3 +1,15 @@
+google.charts.load('current', {'packages':['gauge']});
+
+var chart;
+
+google.charts.setOnLoadCallback(()=>{
+  chart = new TemperatureChart(0);
+  chart.draw();
+});
+
+
+
+
 var data = {
     messages: []
   };
@@ -111,6 +123,7 @@ var data = {
     }
     else if(jsonMessage.uid === 'sensmitter_2' || jsonMessage.uid === 'sensmitter_3'){
       iotObject = new SensmitterTemperature(jsonMessage);
+      chart.setTemperature(iotObject.temperature)
     }
     else if(jsonMessage.uid === 'lab_state'){
       iotObject = new LabState(jsonMessage);
@@ -176,13 +189,15 @@ var data = {
       var message = this.state === 'close';
       return message ? "The blinds are " + this.state + "d" : "The blinds are " + this.state;  
     }
+  }
 
-    function Hue(json){
-      this.timestamp = timestamp;
-      this.powerState = json.command.powerState;
-      this.brightness = json.command.brightness;
-      this.toString = function(){
-        return "The lights are " + this.powerState + " and set to " + this.brightness + "%";
-      }
+  function Hue(json){
+    this.timestamp = timestamp;
+    this.powerState = json.command.powerState;
+    this.brightness = json.command.brightness;
+    this.toString = function(){
+      return "The lights are " + this.powerState + " and set to " + this.brightness + "%";
     }
   }
+
+
