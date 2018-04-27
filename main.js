@@ -141,7 +141,7 @@ var data = {
     else if(jsonMessage.uid === 'person_count'){
       iotObject = new PersonCount(jsonMessage);
     }
-    else if(jsonMessage.uid === 'cameraACCC8E7E6E9F'){
+    else if(jsonMessage.uid === 'cameraACCC8E7E6EAF'){
       iotObject = new InAndOut(jsonMessage);
     }
     else if(jsonMessage.uid === 'eye_contact_1'){
