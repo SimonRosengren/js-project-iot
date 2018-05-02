@@ -1,8 +1,68 @@
-function SoundLevelChart(soundLevel) {
+function PressureChart(pressure) {
+  this.data = google.visualization.arrayToDataTable([
+    ['Label', 'Value'],
+    ['psi', pressure],
+  ]);
 
+  //Make width and height auto fit div
+  var options = { 
+    width: 160, height: 200,
+    minorTicks: 5,
+    majorTicks: ["0", "", "1000", "", "2000", "", "3000", "", "4000"],
+    max: 4000,
+    min: 0,
+    animation: {
+        duration: 2500,
+        easing: 'inAndOut'
+    }
+  };
+
+  var chart = new google.visualization.Gauge(document.getElementById('pressure_chart_div'));
+  
+
+  this.draw = function(){
+      chart.draw(this.data, options)
+    }
+
+    this.setPressureValue = function(pressure){
+        this.data.setValue(0, 1, pressure);
+        this.draw();
+    }
 }
 
 
+function SoundLevelChart(soundLevel) {
+  this.data = google.visualization.arrayToDataTable([
+    ['Label', 'Value'],
+    ['dB', soundLevel],
+  ]);
+
+  //Make width and height auto fit div
+  var options = {
+    redColor: '#ff7575',    
+    width: 160, height: 200,
+    redFrom: 55, redTo: 60,
+    minorTicks: 100,
+    max: 60,
+    min: 30,
+    animation: {
+        duration: 2500,
+        easing: 'inAndOut'
+    }
+  };
+
+  var chart = new google.visualization.Gauge(document.getElementById('sound_chart_div'));
+  
+
+  this.draw = function(){
+      chart.draw(this.data, options)
+    }
+
+    this.setSoundLevel = function(soundLevel){
+        this.data.setValue(0, 1, soundLevel);
+        this.draw();
+    }
+};
 
 function TemperatureChart(temperature) {
   this.data = google.visualization.arrayToDataTable([
@@ -28,7 +88,7 @@ function TemperatureChart(temperature) {
     }
   };
 
-  var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+  var chart = new google.visualization.Gauge(document.getElementById('temp_chart_div'));
   
 
   this.draw = function(){

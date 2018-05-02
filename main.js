@@ -1,10 +1,20 @@
 google.charts.load('current', {'packages':['gauge']});
 
-var chart;
+var temperatureChart;
+var soundChart;
+var pressureChart;
 
 google.charts.setOnLoadCallback(()=>{
-  chart = new TemperatureChart(0);
-  chart.draw();
+
+  //Creating a new TemperatureChart and calling it's draw function
+  temperatureChart = new TemperatureChart(0);
+  temperatureChart.draw();
+
+  soundChart = new SoundLevelChart(0);
+  soundChart.draw();
+
+  var pressureChart = new PressureChart(0);
+  pressureChart.draw();
 });
 
 
@@ -117,13 +127,16 @@ var data = {
 
     if(jsonMessage.uid === 'phone_1'){
       iotObject = new Phone(jsonMessage);
+      var sound_level = Math.round(iotObject.soundlevel * 10) /10
+      soundChart.setSoundLevel(sound_level)
     }
     else if(jsonMessage.uid === 'sensmitter_1'){
       iotObject = new SensmitterPressure(jsonMessage);
+      pressureChart.setPressureValue(iotObject.pressure)
     }
     else if(jsonMessage.uid === 'sensmitter_2' || jsonMessage.uid === 'sensmitter_3'){
       iotObject = new SensmitterTemperature(jsonMessage);
-      chart.setTemperature(iotObject.temperature)
+      temperatureChart.setTemperature(iotObject.temperature)
     }
     else if(jsonMessage.uid === 'lab_state'){
       iotObject = new LabState(jsonMessage);
