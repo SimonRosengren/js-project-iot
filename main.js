@@ -13,7 +13,7 @@ google.charts.setOnLoadCallback(()=>{
   soundChart = new SoundLevelChart(0);
   soundChart.draw();
 
-  var pressureChart = new PressureChart(0);
+  var pressureChart = new PressureChart(1000);
   pressureChart.draw();
 });
 
@@ -27,11 +27,6 @@ var data = {
     data: data
   });
     //Hej
-  document.getElementById('send').addEventListener('click', function (e) {
-    var say = document.getElementById('say')
-    send(say.value);
-    say.value = '';
-  });
 
 
 
