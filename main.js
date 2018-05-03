@@ -149,9 +149,7 @@ google.charts.setOnLoadCallback(()=>{
         return "Unknown object found: " + JSON.stringify(jsonMessage);
       }}
     }
-    data.messages.push(iotObject.toString());
-
-    //console.log("message received: " + message.payloadString);
+    console.log(iotObject);
   }
 
   function Phone(json){
