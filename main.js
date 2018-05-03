@@ -1,9 +1,11 @@
 google.charts.load('current', {'packages':['gauge']});
+google.charts.load('current', {'packages':['corechart']});
 
 var temperatureChart;
 var soundChart;
 var pressureChart;
 var iotObject;
+var humidityChart;
 
 google.charts.setOnLoadCallback(()=>{
 
@@ -14,8 +16,11 @@ google.charts.setOnLoadCallback(()=>{
   soundChart = new SoundLevelChart(0);
   soundChart.draw();
 
-  var pressureChart = new PressureChart(1000);
+  pressureChart = new PressureChart(1000);
   pressureChart.draw();
+
+  humidityChart = new HumidityChart(10);
+  humidityChart.draw();
 });
 
   function SigV4Utils(){}
@@ -114,10 +119,12 @@ google.charts.setOnLoadCallback(()=>{
     else if(jsonMessage.uid === 'sensmitter_1'){
       iotObject = new SensmitterPressure(jsonMessage);
       pressureChart.setPressureValue(iotObject.pressure)
+      humidityChart.setHumidity(iotObject.timestamp,iotObject.humidity);
     }
     else if(jsonMessage.uid === 'sensmitter_2' || jsonMessage.uid === 'sensmitter_3'){
       iotObject = new SensmitterTemperature(jsonMessage);
       temperatureChart.setTemperature(iotObject.temperature)
+      humidityChart.setHumidity(iotObject.timestamp,iotObject.humidity);
     }
     else if(jsonMessage.uid === 'lab_state'){
       iotObject = new LabState(jsonMessage);
@@ -130,6 +137,7 @@ google.charts.setOnLoadCallback(()=>{
     }
     else if(jsonMessage.uid === 'arduino_due_1'){
       iotObject = new Ardunio(jsonMessage);
+      humidityChart.setHumidity(iotObject.timestamp,iotObject.humidity);
     }
     else if(jsonMessage.uid === 'axis_old_camera'){
       iotObject = new CameraAxis(jsonMessage);
