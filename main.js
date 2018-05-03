@@ -3,6 +3,7 @@ google.charts.load('current', {'packages':['gauge']});
 var temperatureChart;
 var soundChart;
 var pressureChart;
+var iotObject;
 
 google.charts.setOnLoadCallback(()=>{
 
@@ -16,19 +17,6 @@ google.charts.setOnLoadCallback(()=>{
   var pressureChart = new PressureChart(1000);
   pressureChart.draw();
 });
-
-
-var data = {
-    messages: []
-  };
-
-  new Vue({
-    el: '#chat',
-    data: data
-  });
-    //Hej
-
-
 
   function SigV4Utils(){}
 
@@ -116,7 +104,7 @@ var data = {
 
   function onMessage(message) {
     var jsonMessage = JSON.parse(message.payloadString);
-    var iotObject;
+
 
     if(jsonMessage.uid === 'phone_1'){
       iotObject = new Phone(jsonMessage);
@@ -207,7 +195,7 @@ var data = {
     this.timestamp = json.timestamp;
     this.state = json.command.blind_state;
     this.toString = function(){
-      return this.state === 'close' ? "The blinds are " + this.state + "d" : "The blinds are " + this.state;  
+      return this.state === 'close' ? "The blinds are " + this.state + "d" : "The blinds are " + this.state;
     }
   }
 
@@ -228,7 +216,7 @@ var data = {
     this.humidity = json.data.humidity;
 
     this.toString = function(){
-      return "The Ardunio light level: " + this.lightLevel + ", tempature: " + this.temperature + " and humidity: " + this.humidity + ". The sound level are " + this.soundLevel; 
+      return "The Ardunio light level: " + this.lightLevel + ", tempature: " + this.temperature + " and humidity: " + this.humidity + ". The sound level are " + this.soundLevel;
     }
   }
 
@@ -237,7 +225,7 @@ var data = {
     this.audioAlarm = json.data.audio_alarm;
 
     this.toString = function(){
-      return "The old Camera Axis Audio Alarm set to " + this.audioAlarm; 
+      return "The old Camera Axis Audio Alarm set to " + this.audioAlarm;
     }
   }
 
@@ -270,5 +258,3 @@ var data = {
       return "Faces detected " + this.detectedFaces + ". Looking at the camera " + this.lookingAtCamera + ", eye contacs " + this.eyeContacs;
     }
   }
-
-
