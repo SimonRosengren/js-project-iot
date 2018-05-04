@@ -30,3 +30,26 @@ function fillWithHistoricalData(table, lineChart) {
         }
     }
 }
+
+function fillScatterChartWithHistoricalData(table, scatterChart) {
+    var params = {
+        TableName: table
+    };
+
+    docClient.scan(params, onScan);
+
+    function onScan(err, data) {
+        if (err) {
+            console.log(err)
+        } else {
+            var arr = []
+            //Takes only every 10th datapoint
+            for (let index = 0; index < data.Items.length; index += 10) {
+                var t = new Date(0);
+                t.setSeconds(data.Items[index].payload.Ts);
+                arr.push([t.getHours() + "" + t.getMinutes(), data.Items[index].payload.Data.Temperature])
+            }
+            scatterChart.addData(arr)
+        }
+    }
+}

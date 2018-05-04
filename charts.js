@@ -182,3 +182,36 @@ function HistoricalTemperatureLineChart() {
 
 }
 
+function HistoricalSoundAndTimeScatterChart() {
+
+  this.data = new google.visualization.DataTable();
+  this.data.addColumn('number', '');
+  this.data.addColumn('number', '');
+
+  var options = {
+    width: 800,
+    height: 680,
+    chart: {
+      title: 'Temperature / Time of day',
+    },
+    hAxis: {title: 'Time of day'},
+    vAxis: {title: 'Temperature'}
+  };
+
+
+  this.chart = new google.charts.Scatter(document.getElementById('historical_sound_chart_div'));
+
+  this.addData = function (tempData) {
+    var arr = []
+    tempData.forEach(element => {
+      arr.push([Number(element[0]), parseFloat(element[1])])
+    });
+    this.data.addRows(arr)
+    this.draw();
+  }
+
+  this.draw = function () {
+    this.chart.draw(this.data, options);
+  }
+}
+
