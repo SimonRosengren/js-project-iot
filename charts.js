@@ -111,7 +111,7 @@ function HumidityChart(humidity) {
   var options = {
     title: 'Humidity',
     hAxis: { title: 'Time', titleTextStyle: { color: '#333' } },
-    vAxis: { minValue: 0 },
+    vAxis: { minValue: 0, textStyle:{ color: '#FFF'} },
     animation: {
       duration: 2500,
       easing: 'inAndOut'
@@ -120,6 +120,7 @@ function HumidityChart(humidity) {
       fill: '#fffff',
       fillOpacity: 0
     },
+    colors:['white'],
     titleTextStyle: { color: '#FFF' },
     legendTextStyle: { color: '#FFF' },
     hAxis: {
@@ -155,12 +156,13 @@ function HistoricalTemperatureLineChart() {
     title: 'Historical Temperature',
     curveType: 'function',
     hAxis: { title: 'Time', titleTextStyle: { color: '#333' } },
-    vAxis: { minValue: 21.5 },
+    vAxis: { minValue: 21.5, textStyle:{ color: '#FFF'} },
     legend: { position: 'bottom' },
     backgroundColor: {
       fill: '#fffff',
       fillOpacity: 0
     },
+    colors:['white'],
     titleTextStyle: { color: '#FFF' },
     legendTextStyle: { color: '#FFF' }
 
