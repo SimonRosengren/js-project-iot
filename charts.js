@@ -113,7 +113,7 @@ function HumidityChart(humidity) {
     hAxis: { title: 'Time', titleTextStyle: { color: '#333' } },
     vAxis: { minValue: 0, textStyle:{ color: '#FFF'} },
     animation: {
-      duration: 2500,
+      duration: 1500,
       easing: 'inAndOut'
     },
     backgroundColor: {
@@ -128,6 +128,11 @@ function HumidityChart(humidity) {
     }
   };
   var chart = new google.visualization.AreaChart(document.getElementById('humidity_chart_div'));
+
+  this.animationDur = function(time){
+    options.animation = time;
+    console.log(options.animation)
+  }
 
   this.draw = function () {
     chart.draw(this.data, options);
@@ -224,4 +229,3 @@ function HistoricalSoundAndTimeScatterChart() {
     this.chart.draw(this.data, this.options);
   }
 }
-

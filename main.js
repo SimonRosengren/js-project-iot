@@ -34,6 +34,11 @@ google.charts.setOnLoadCallback(()=>{
   fillScatterChartWithHistoricalData("Sensmitter01", historicalSoundScatterChart)
 });
 
+  window.addEventListener('resize', () => {
+    humidityChart.animationDur(0.5);
+    humidityChart.draw();
+  });
+
   function SigV4Utils(){}
 
 
