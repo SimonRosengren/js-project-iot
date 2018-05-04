@@ -1,5 +1,6 @@
 google.charts.load('current', {'packages':['gauge']});
 google.charts.load('current', {'packages':['corechart']});
+google.charts.load('current', {'packages':['corechart', 'scatter']});
 
 var temperatureChart;
 var soundChart;
@@ -7,6 +8,7 @@ var pressureChart;
 var iotObject;
 var humidityChart;
 var historicalTempLineChart;
+var historicalSoundScatterChart;
 
 google.charts.setOnLoadCallback(()=>{
 
@@ -26,6 +28,10 @@ google.charts.setOnLoadCallback(()=>{
   historicalTempLineChart = new HistoricalTemperatureLineChart();
   historicalTempLineChart.draw();
   fillWithHistoricalData("Sensmitter01", historicalTempLineChart)
+
+  historicalSoundScatterChart = new HistoricalSoundAndTimeScatterChart();
+  historicalSoundScatterChart.draw();
+  fillScatterChartWithHistoricalData("Sensmitter01", historicalSoundScatterChart)
 });
 
   function SigV4Utils(){}
