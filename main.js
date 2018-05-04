@@ -6,6 +6,7 @@ var soundChart;
 var pressureChart;
 var iotObject;
 var humidityChart;
+var historicalTempLineChart;
 
 google.charts.setOnLoadCallback(()=>{
 
@@ -21,6 +22,10 @@ google.charts.setOnLoadCallback(()=>{
 
   humidityChart = new HumidityChart(10);
   humidityChart.draw();
+
+  historicalTempLineChart = new HistoricalTemperatureLineChart();
+  historicalTempLineChart.draw();
+  readItem("Sensmitter01"); //Temporarily to load historical data of temperature!!
 });
 
   function SigV4Utils(){}
