@@ -104,7 +104,7 @@ function TemperatureChart(temperature) {
 function HumidityChart(humidity) {
   var tableData = [
     ['Time', '%'],
-    ['2013', 1]
+    ['', 1]
   ];
   this.data = google.visualization.arrayToDataTable(tableData);
 
@@ -133,7 +133,9 @@ function HumidityChart(humidity) {
   }
   //Får fixa detta sen....
   this.setHumidity = function (timestamp, humidity) {
-    tableData.push([timestamp, humidity]);
+    var date = new Date(0)
+    date.setSeconds(timestamp)
+    tableData.push([date, humidity]);
     this.data = google.visualization.arrayToDataTable(tableData);
     this.draw();
   }
