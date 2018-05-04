@@ -186,20 +186,26 @@ function HistoricalTemperatureLineChart() {
 
 }
 
+
 function HistoricalSoundAndTimeScatterChart() {
 
   this.data = new google.visualization.DataTable();
   this.data.addColumn('number', '');
   this.data.addColumn('number', '');
 
-  var options = {
-    width: 800,
+  this.options = {
+    width: 1400,
     height: 680,
+    backgroundColor: { //I cant change the damn color____!_)@!!)1
+      fill: 'transparent'
+    },
     chart: {
       title: 'Temperature / Time of day',
     },
     hAxis: {title: 'Time of day'},
-    vAxis: {title: 'Temperature'}
+    vAxis: {title: 'Temperature'},
+
+
   };
 
 
@@ -215,7 +221,7 @@ function HistoricalSoundAndTimeScatterChart() {
   }
 
   this.draw = function () {
-    this.chart.draw(this.data, options);
+    this.chart.draw(this.data, this.options);
   }
 }
 
