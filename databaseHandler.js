@@ -1,21 +1,15 @@
 AWS.config.update({
     region: "us-east-1",
-    // accessKeyId default can be used while using the downloadable version of DynamoDB. 
-    // For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.
     accessKeyId: "AKIAIVBVKDOAE3AASRHA",
-    // secretAccessKey default can be used while using the downloadable version of DynamoDB. 
-    // For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.
     secretAccessKey: "Z46irEIjQf4JUF8fqH3n0mhiDGgbqI+LdyFYq6Hk"
 });
 
 var docClient = new AWS.DynamoDB.DocumentClient();
 
-function readItem() {
-    var table = "Sensmitter01";
-
-
+//As of now this prints ALL data in the table
+function readItem(table) {
     var params = {
-        TableName: "Sensmitter01",
+        TableName: table
     };
 
     docClient.scan(params, onScan);
@@ -24,7 +18,16 @@ function readItem() {
         if (err) {
             console.log(err)
         } else {
-            console.log(data)
+            console.log(data.Items[0])
+            var arr = []
+            for (let index = 0; index < data.Items.length; index += 10) {
+                var t = new Date();
+                t.setSeconds(data.Items[index].payload.Ts);
+                var formatted = t.toISOString();
+                arr.push([formatted, data.Items[index].payload.Data.Temperature])
+            }
+            console.log(arr.length)
+            historicalTempLineChart.addTempData(arr)
         }
     }
 }
