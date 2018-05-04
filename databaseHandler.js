@@ -6,8 +6,9 @@ AWS.config.update({
 
 var docClient = new AWS.DynamoDB.DocumentClient();
 
-//As of now this prints ALL data in the table
-function readItem(table) {
+//table = name of db table
+//linechart = chart to fill with data
+function fillWithHistoricalData(table, lineChart) {
     var params = {
         TableName: table
     };
@@ -18,16 +19,14 @@ function readItem(table) {
         if (err) {
             console.log(err)
         } else {
-            console.log(data.Items[0])
             var arr = []
+            //Takes only every 10th datapoint
             for (let index = 0; index < data.Items.length; index += 10) {
-                var t = new Date();
+                var t = new Date(0);
                 t.setSeconds(data.Items[index].payload.Ts);
-                var formatted = t.toISOString();
-                arr.push([formatted, data.Items[index].payload.Data.Temperature])
+                arr.push([t, data.Items[index].payload.Data.Temperature])
             }
-            console.log(arr.length)
-            historicalTempLineChart.addTempData(arr)
+            lineChart.addData(arr)
         }
     }
 }

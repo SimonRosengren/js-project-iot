@@ -25,7 +25,7 @@ google.charts.setOnLoadCallback(()=>{
 
   historicalTempLineChart = new HistoricalTemperatureLineChart();
   historicalTempLineChart.draw();
-  readItem("Sensmitter01"); //Temporarily to load historical data of temperature!!
+  fillWithHistoricalData("Sensmitter01", historicalTempLineChart)
 });
 
   function SigV4Utils(){}

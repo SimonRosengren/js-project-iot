@@ -166,7 +166,7 @@ function HistoricalTemperatureLineChart() {
 
   this.chart = new google.visualization.LineChart(document.getElementById('historical_temp_chart_div'));
 
-  this.addTempData = function (tempData) {
+  this.addData = function (tempData) {
     //Divide the array of arrays into seperate arrays and push them
     for (let index = 0; index < tempData.length; index++) {
       tableData.push(tempData[index]);
