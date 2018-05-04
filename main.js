@@ -3,10 +3,8 @@ google.charts.load('current', {'packages':['gauge']});
 var temperatureChart;
 var soundChart;
 var pressureChart;
-var iotObject;
 
 google.charts.setOnLoadCallback(()=>{
-
   //Creating a new TemperatureChart and calling it's draw function
   temperatureChart = new TemperatureChart(0);
   temperatureChart.draw();
@@ -14,12 +12,21 @@ google.charts.setOnLoadCallback(()=>{
   soundChart = new SoundLevelChart(0);
   soundChart.draw();
 
-  var pressureChart = new PressureChart(1000);
+  pressureChart = new PressureChart(1000);
   pressureChart.draw();
 });
 
-  function SigV4Utils(){}
 
+var data = {
+    messages: []
+  };
+
+  new Vue({
+    el: '#chat',
+    data: data
+  });
+
+  function SigV4Utils(){}
 
   SigV4Utils.sign = function(key, msg) {
     var hash = CryptoJS.HmacSHA256(msg, key);
@@ -104,7 +111,7 @@ google.charts.setOnLoadCallback(()=>{
 
   function onMessage(message) {
     var jsonMessage = JSON.parse(message.payloadString);
-
+    var iotObject;
 
     if(jsonMessage.uid === 'phone_1'){
       iotObject = new Phone(jsonMessage);
@@ -149,7 +156,9 @@ google.charts.setOnLoadCallback(()=>{
         return "Unknown object found: " + JSON.stringify(jsonMessage);
       }}
     }
-    console.log(iotObject);
+    data.messages.push(iotObject.toString());
+
+    //console.log("message received: " + message.payloadString);
   }
 
   function Phone(json){
@@ -193,7 +202,7 @@ google.charts.setOnLoadCallback(()=>{
     this.timestamp = json.timestamp;
     this.state = json.command.blind_state;
     this.toString = function(){
-      return this.state === 'close' ? "The blinds are " + this.state + "d" : "The blinds are " + this.state;
+      return this.state === 'close' ? "The blinds are " + this.state + "d" : "The blinds are " + this.state;  
     }
   }
 
@@ -214,7 +223,7 @@ google.charts.setOnLoadCallback(()=>{
     this.humidity = json.data.humidity;
 
     this.toString = function(){
-      return "The Ardunio light level: " + this.lightLevel + ", tempature: " + this.temperature + " and humidity: " + this.humidity + ". The sound level are " + this.soundLevel;
+      return "The Ardunio light level: " + this.lightLevel + ", tempature: " + this.temperature + " and humidity: " + this.humidity + ". The sound level are " + this.soundLevel; 
     }
   }
 
@@ -223,7 +232,7 @@ google.charts.setOnLoadCallback(()=>{
     this.audioAlarm = json.data.audio_alarm;
 
     this.toString = function(){
-      return "The old Camera Axis Audio Alarm set to " + this.audioAlarm;
+      return "The old Camera Axis Audio Alarm set to " + this.audioAlarm; 
     }
   }
 
@@ -256,3 +265,5 @@ google.charts.setOnLoadCallback(()=>{
       return "Faces detected " + this.detectedFaces + ". Looking at the camera " + this.lookingAtCamera + ", eye contacs " + this.eyeContacs;
     }
   }
+
+
