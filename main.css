@@ -1,4 +1,34 @@
-div{
-    display: inline-block;
-    margin: 10px 10px 10px 10px;
+.carousel-item-next,
+.carousel-item-prev,
+.carousel-item.active {
+    height: 100vh;
+    background-color: #333;
+    padding: 5rem;
+}
+
+.carousel-control-next,
+.carousel-control-prev {
+    width: 10% !important;
+}
+
+.carousel-indicators {
+    top: 0;
+    bottom: initial !important;
+}
+
+.carousel-indicators li {
+    width: initial !important;
+    height: initial !important;
+    text-indent: initial !important;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.carousel-indicators li:hover {
+    background-color: #ccc;
+}
+
+h1 {
+    text-align: center;
+    color: #fff !important;
 }

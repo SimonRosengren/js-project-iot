@@ -1,10 +1,14 @@
 google.charts.load('current', {'packages':['gauge']});
+google.charts.load('current', {'packages':['corechart']});
 
 var temperatureChart;
 var soundChart;
 var pressureChart;
+var iotObject;
+var humidityChart;
 
 google.charts.setOnLoadCallback(()=>{
+
   //Creating a new TemperatureChart and calling it's draw function
   temperatureChart = new TemperatureChart(0);
   temperatureChart.draw();
@@ -14,19 +18,13 @@ google.charts.setOnLoadCallback(()=>{
 
   pressureChart = new PressureChart(1000);
   pressureChart.draw();
+
+  humidityChart = new HumidityChart(10);
+  humidityChart.draw();
 });
 
-
-var data = {
-    messages: []
-  };
-
-  new Vue({
-    el: '#chat',
-    data: data
-  });
-
   function SigV4Utils(){}
+
 
   SigV4Utils.sign = function(key, msg) {
     var hash = CryptoJS.HmacSHA256(msg, key);
@@ -111,7 +109,7 @@ var data = {
 
   function onMessage(message) {
     var jsonMessage = JSON.parse(message.payloadString);
-    var iotObject;
+
 
     if(jsonMessage.uid === 'phone_1'){
       iotObject = new Phone(jsonMessage);
@@ -121,10 +119,12 @@ var data = {
     else if(jsonMessage.uid === 'sensmitter_1'){
       iotObject = new SensmitterPressure(jsonMessage);
       pressureChart.setPressureValue(iotObject.pressure)
+      humidityChart.setHumidity(iotObject.timestamp,iotObject.humidity);
     }
     else if(jsonMessage.uid === 'sensmitter_2' || jsonMessage.uid === 'sensmitter_3'){
       iotObject = new SensmitterTemperature(jsonMessage);
       temperatureChart.setTemperature(iotObject.temperature)
+      humidityChart.setHumidity(iotObject.timestamp,iotObject.humidity);
     }
     else if(jsonMessage.uid === 'lab_state'){
       iotObject = new LabState(jsonMessage);
@@ -137,6 +137,7 @@ var data = {
     }
     else if(jsonMessage.uid === 'arduino_due_1'){
       iotObject = new Ardunio(jsonMessage);
+      humidityChart.setHumidity(iotObject.timestamp,iotObject.humidity);
     }
     else if(jsonMessage.uid === 'axis_old_camera'){
       iotObject = new CameraAxis(jsonMessage);
@@ -156,9 +157,7 @@ var data = {
         return "Unknown object found: " + JSON.stringify(jsonMessage);
       }}
     }
-    data.messages.push(iotObject.toString());
-
-    //console.log("message received: " + message.payloadString);
+    console.log(iotObject);
   }
 
   function Phone(json){
@@ -202,7 +201,7 @@ var data = {
     this.timestamp = json.timestamp;
     this.state = json.command.blind_state;
     this.toString = function(){
-      return this.state === 'close' ? "The blinds are " + this.state + "d" : "The blinds are " + this.state;  
+      return this.state === 'close' ? "The blinds are " + this.state + "d" : "The blinds are " + this.state;
     }
   }
 
@@ -223,7 +222,7 @@ var data = {
     this.humidity = json.data.humidity;
 
     this.toString = function(){
-      return "The Ardunio light level: " + this.lightLevel + ", tempature: " + this.temperature + " and humidity: " + this.humidity + ". The sound level are " + this.soundLevel; 
+      return "The Ardunio light level: " + this.lightLevel + ", tempature: " + this.temperature + " and humidity: " + this.humidity + ". The sound level are " + this.soundLevel;
     }
   }
 
@@ -232,7 +231,7 @@ var data = {
     this.audioAlarm = json.data.audio_alarm;
 
     this.toString = function(){
-      return "The old Camera Axis Audio Alarm set to " + this.audioAlarm; 
+      return "The old Camera Axis Audio Alarm set to " + this.audioAlarm;
     }
   }
 
@@ -265,5 +264,3 @@ var data = {
       return "Faces detected " + this.detectedFaces + ". Looking at the camera " + this.lookingAtCamera + ", eye contacs " + this.eyeContacs;
     }
   }
-
-
