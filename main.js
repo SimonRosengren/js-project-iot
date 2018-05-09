@@ -144,6 +144,7 @@ var endpoint = createEndpoint(
       }
       else if(jsonMessage.uid === 'lab_state'){
          iotObject = new LabState(jsonMessage);
+         $("#labstate h2").text("Lab status: " + iotObject.state)
       }
       else if(jsonMessage.uid === 'blinds_1'){
          iotObject = new Blind(jsonMessage);
