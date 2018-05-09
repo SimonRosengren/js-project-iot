@@ -133,6 +133,9 @@ google.charts.setOnLoadCallback(()=>{
     }
     else if(jsonMessage.uid === 'lab_state'){
       iotObject = new LabState(jsonMessage);
+      console.log("THIS IS IT" + iotObject)
+      var h2 = document.getElementById('labstate');
+      h2.innerText(iotObject)
     }
     else if(jsonMessage.uid === 'blinds_1'){
       iotObject = new Blind(jsonMessage);
