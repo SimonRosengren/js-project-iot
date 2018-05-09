@@ -6,7 +6,6 @@ function PressureChart(pressure) {
 
   //Make width and height auto fit div
   var options = {
-    width: 160, height: 200,
     minorTicks: 5,
     majorTicks: ["0", "", "1000", "", "2000", "", "3000", "", "4000"],
     max: 4000,
@@ -40,7 +39,6 @@ function SoundLevelChart(soundLevel) {
   //Make width and height auto fit div
   var options = {
     redColor: '#ff7575',
-    width: 160, height: 200,
     redFrom: 55, redTo: 60,
     minorTicks: 100,
     max: 60,
@@ -75,7 +73,6 @@ function TemperatureChart(temperature) {
     yellowColor: '#8080ff',
     redColor: '#ff7575',
     greenColor: '#b3ffb3',
-    width: 160, height: 200,
     redFrom: 27, redTo: 30,
     greenFrom: 18, greenTo: 27,
     yellowFrom: 15, yellowTo: 18,
