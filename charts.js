@@ -113,7 +113,7 @@ function HumidityChart(humidity) {
     hAxis: { title: 'Time', titleTextStyle: { color: '#333' } },
     vAxis: { minValue: 0, textStyle:{ color: '#FFF'} },
     animation: {
-      duration: 2500,
+      duration: 1500,
       easing: 'inAndOut'
     },
     backgroundColor: {
@@ -128,6 +128,11 @@ function HumidityChart(humidity) {
     }
   };
   var chart = new google.visualization.AreaChart(document.getElementById('humidity_chart_div'));
+
+  this.animationDur = function(time){
+    options.animation = time;
+    console.log(options.animation)
+  }
 
   this.draw = function () {
     chart.draw(this.data, options);
@@ -186,3 +191,41 @@ function HistoricalTemperatureLineChart() {
 
 }
 
+
+function HistoricalSoundAndTimeScatterChart() {
+
+  this.data = new google.visualization.DataTable();
+  this.data.addColumn('number', '');
+  this.data.addColumn('number', '');
+
+  this.options = {
+    width: 1400,
+    height: 680,
+    backgroundColor: { //I cant change the damn color____!_)@!!)1
+      fill: 'transparent'
+    },
+    chart: {
+      title: 'Temperature / Time of day',
+    },
+    hAxis: {title: 'Time of day'},
+    vAxis: {title: 'Temperature'},
+
+
+  };
+
+
+  this.chart = new google.charts.Scatter(document.getElementById('historical_sound_chart_div'));
+
+  this.addData = function (tempData) {
+    var arr = []
+    tempData.forEach(element => {
+      arr.push([Number(element[0]), parseFloat(element[1])])
+    });
+    this.data.addRows(arr)
+    this.draw();
+  }
+
+  this.draw = function () {
+    this.chart.draw(this.data, this.options);
+  }
+}

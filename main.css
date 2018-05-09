@@ -2,7 +2,7 @@
 .carousel-item-prev,
 .carousel-item.active {
     height: 100vh;
-    background-color: #333;
+    /* background-color: #333; */
     padding: 5rem;
 }
 
@@ -30,7 +30,7 @@
 
 h1 {
     text-align: center;
-    color: #fff !important;
+    color: inherit;
 }
 
 h2 {
