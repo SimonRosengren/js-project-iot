@@ -123,10 +123,11 @@ var endpoint = createEndpoint(
       console.log("sent");
    }
 
+   //   Function to handle answers from the api
    function onMessage(message) {
       var jsonMessage = JSON.parse(message.payloadString);
 
-
+        //  Make the right object depending on the answer
       if(jsonMessage.uid === 'phone_1'){
          iotObject = new Phone(jsonMessage);
          var sound_level = Math.round(iotObject.soundlevel * 10) /10
@@ -144,6 +145,7 @@ var endpoint = createEndpoint(
       }
       else if(jsonMessage.uid === 'lab_state'){
          iotObject = new LabState(jsonMessage);
+         $("#labstate h2").text("Lab status: " + iotObject.state)
       }
       else if(jsonMessage.uid === 'blinds_1'){
          iotObject = new Blind(jsonMessage);
@@ -176,6 +178,7 @@ var endpoint = createEndpoint(
       console.log(iotObject);
    }
 
+   //   Phone class
    function Phone(json){
       this.timestamp = json.timestamp;
       this.soundlevel = json.data.sound_level;
@@ -184,6 +187,7 @@ var endpoint = createEndpoint(
       }
    }
 
+   //   Sensmitter class
    function SensmitterPressure(json){
       this.timestamp = json.timestamp;
       this.humidity = json.data.humidity;
@@ -194,6 +198,7 @@ var endpoint = createEndpoint(
       }
    }
 
+   //   Sensmitter class
    function SensmitterTemperature(json){
       this.timestamp = json.timestamp;
       this.humidity = json.data.humidity;
@@ -205,6 +210,7 @@ var endpoint = createEndpoint(
       }
    }
 
+   //   Labstate class
    function LabState(json){
       this.timestamp = json.timestamp;
       this.state = json.data.state;
@@ -213,6 +219,7 @@ var endpoint = createEndpoint(
       }
    }
 
+   //   Blind class
    function Blind(json){
       this.timestamp = json.timestamp;
       this.state = json.command.blind_state;
@@ -221,6 +228,7 @@ var endpoint = createEndpoint(
       }
    }
 
+   //   Hue class
    function Hue(json){
       this.timestamp = json.timestamp;
       this.powerState = json.command.powerState;
@@ -230,6 +238,7 @@ var endpoint = createEndpoint(
       }
    }
 
+   //   Ardurino class
    function Ardunio(json){
       this.timestamp = json.timestamp;
       this.soundLevel = json.data.sound_level;
@@ -242,6 +251,7 @@ var endpoint = createEndpoint(
       }
    }
 
+   //   CameraAxis class
    function CameraAxis(json){
       this.timestamp = json.timestamp;
       this.audioAlarm = json.data.audio_alarm;
@@ -251,6 +261,7 @@ var endpoint = createEndpoint(
       }
    }
 
+   //   PersonCount class
    function PersonCount(json){
       this.timestamp = json.timestamp;
       this.count = json.data.count;
@@ -261,6 +272,7 @@ var endpoint = createEndpoint(
       }
    }
 
+   //   InAndOut class
    function InAndOut(json){
       this.timestamp = json.timestamp;
       this.movementDirection = json.data.movement_direction;
@@ -270,6 +282,7 @@ var endpoint = createEndpoint(
       }
    }
 
+   //   EyeContact class
    function EyeContact(json){
       this.timestamp = json.timestamp;
       this.lookingAtCamera = json.data.looking_towards_camera;
@@ -282,9 +295,11 @@ var endpoint = createEndpoint(
    }
 
 
-   // RGB-BAKGROUND-CHANGER
+   //   RGB-BAKGROUND-CHANGER
+   //   Sets the brightness to the RGB value from the hue
    var brightness = Math.floor(Math.random() * 255); // Ersätt detta värde med de värde som brightness har i IoT-labbet
    document.body.style.backgroundColor = "rgb(" + brightness + ", " + brightness + ", " + brightness + ")";
+   //   Check if the brightness is higher than 150, if so set the text on the page to black. Else to white
    if(brightness < 150){
       document.body.style.color = "#fff";
       document.getElementsByClassName('active')[0].style.backgroundColor = "#444";

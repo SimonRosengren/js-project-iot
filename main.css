@@ -6,7 +6,6 @@
     padding: 5rem;
 }
 
-
 .carousel-control-next,
 .carousel-control-prev {
     width: 10% !important;
@@ -56,3 +55,7 @@ h1 {
 
 
 
+h2 {
+    text-align: center;
+    color: #fff !important;
+}
