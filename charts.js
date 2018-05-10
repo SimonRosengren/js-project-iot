@@ -156,6 +156,7 @@ function HumidityChart(humidity) {
     this.data = google.visualization.arrayToDataTable(tableData);
     this.draw();
   }
+
 }
 
 
@@ -195,7 +196,6 @@ function HistoricalTemperatureLineChart() {
       tableData.push(tempData[index]);
     }
 
-    //  Varför är detta såhär sion?
     this.data = google.visualization.arrayToDataTable(tableData);
     this.draw();
   }

@@ -33,6 +33,28 @@ h1 {
     color: inherit;
 }
 
+.climate-tab-wrapper{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1em;
+    padding: 3em;
+}
+
+
+.climate-gague-wrapper{
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    justify-items: center;
+}
+
+.climate-chart-wrapper{
+    display: grid;
+    grid-template-columns:  2fr 2fr;
+    justify-items: center;
+}
+
+
+
 h2 {
     text-align: center;
     color: #fff !important;
