@@ -109,14 +109,17 @@ function TemperatureChart(temperature) {
 
 function HumidityChart(humidity) {
   var tableData = [
-    ['Time', '%'],
-    ['', 1]
+    ['Time', 'Sens 1', 'Sen 2', 'Sens 3','Ardur'],
+    ['', 0,0,0,0]
   ];
   this.data = google.visualization.arrayToDataTable(tableData);
-
+  this.sensmitter1 = 0;
+  this.sensmitter2 = 0;
+  this.sensmitter3 = 0;
+  this.ardurino = 0;
   //  Design options
   var options = {
-    title: 'Humidity',
+    title: 'Live Humidity',
     hAxis: { title: 'Time', titleTextStyle: { color: '#333' } },
     vAxis: { minValue: 0, textStyle:{ color: '#FFF'} },
     animation: {
@@ -127,12 +130,13 @@ function HumidityChart(humidity) {
       fill: '#fffff',
       fillOpacity: 0
     },
-    colors:['white'],
+    colors:['white','gray','blue','yellow'],
     titleTextStyle: { color: '#FFF' },
     legendTextStyle: { color: '#FFF' },
     hAxis: {
       color: '#FFF',
-    }
+    },
+    legend: {position: 'top', maxLines: 6},
   };
   var chart = new google.visualization.AreaChart(document.getElementById('humidity_chart_div'));
 
@@ -146,13 +150,44 @@ function HumidityChart(humidity) {
   this.draw = function () {
     chart.draw(this.data, options);
   }
+  this.addSensmitter1 = function (timestamp, data) {
 
-  //  Function to set humidity when it's live
-  //  Får fixa detta sen....
-  this.setHumidity = function (timestamp, humidity) {
+    this.sensmitter1 = data;
+
     var date = new Date(0)
     date.setSeconds(timestamp)
-    tableData.push([date, humidity]);
+
+    tableData.push([date, data,this.sensmitter2,this.sensmitter3,this.ardurino]);
+    this.data = google.visualization.arrayToDataTable(tableData);
+    this.draw();
+  }
+  this.addSensmitter2 = function (timestamp, data) {
+
+    this.sensmitter2 = data;
+
+    var date = new Date(0)
+    date.setSeconds(timestamp)
+    tableData.push([date, this.sensmitter1,data,this.sensmitter3,this.ardurino]);
+    this.data = google.visualization.arrayToDataTable(tableData);
+    this.draw();
+  }
+  this.addSensmitter3 = function (timestamp, data) {
+
+    this.sensmitter3 = data;
+
+    var date = new Date(0)
+    date.setSeconds(timestamp)
+    tableData.push([date, this.sensmitter1,this.sensmitter2,data,this.ardurino]);
+    this.data = google.visualization.arrayToDataTable(tableData);
+    this.draw();
+  }
+  this.addArdurino = function (timestamp, data) {
+
+    this.ardurino = data;
+
+    var date = new Date(0)
+    date.setSeconds(timestamp)
+    tableData.push([date, this.sensmitter1,this.sensmitter2,this.sensmitter3,data]);
     this.data = google.visualization.arrayToDataTable(tableData);
     this.draw();
   }
@@ -165,7 +200,7 @@ function HistoricalTemperatureLineChart() {
 
   var tableData = [
     ['Time', 'Temp'],
-    ['', 21.6]    //Varför måste vi ha en tom här?
+    ['', 21.6]    //Varför måste vi ha en tom här? Bra fråga asså men det är typ om man vill en text under grafen 
   ];
 
   this.data = google.visualization.arrayToDataTable(tableData);

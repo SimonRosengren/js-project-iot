@@ -10,6 +10,15 @@ var humidityChart;
 var historicalTempLineChart;
 var historicalSoundScatterChart;
 
+var controlPrev = document.getElementById("controlPrev");
+var controlNext = document.getElementById("controlNext");
+var oList = document.getElementById("indicator");
+
+console.log(oList.children[1]);
+
+
+
+
 google.charts.setOnLoadCallback(()=>{
 
    //Creating a new TemperatureChart and calling it's draw function
@@ -33,11 +42,46 @@ google.charts.setOnLoadCallback(()=>{
    historicalSoundScatterChart.draw();
    fillScatterChartWithHistoricalData("Sensmitter01", historicalSoundScatterChart)
 });
-
+// Event on when window resize, to redraw the chart.
 window.addEventListener('resize', () => {
    humidityChart.animationDur(0.5);
    humidityChart.draw();
 });
+
+//These are used for redrawing the charts.
+// Don't no if this is necessary now, but if you would like to redraw your chart, you now can do that.
+controlPrev.addEventListener("click", () => {
+  drawActiveSlide("<-");
+  
+});
+controlNext.addEventListener("click", () =>{
+  drawActiveSlide("->");
+});
+function drawActiveSlide(dir){
+  if(dir === '->'){
+    // Draw everything on the Lab-Slide
+    if(oList.children[0].className === 'active'){
+    }
+    // Draw everything on the Persons-Slide
+    else if(oList.children[1].className === 'active'){
+    }
+    // Draw everything on the Climate-Slide
+    else if(oList.children[2].className === 'active'){
+      humidityChart.draw();
+    }
+  }
+  else if(dir === '<-'){
+    // Draw everything on the Persons-Slide
+    if(oList.children[0].className === 'active'){
+    }
+    // Draw everything on the Climate-Slide
+    else if(oList.children[1].className === 'active'){
+    }
+    // Draw everything on Lab-Slide
+    else if(oList.children[2].className === 'active'){
+    }
+  }
+}
 
 function SigV4Utils(){}
 
@@ -141,7 +185,12 @@ var endpoint = createEndpoint(
       else if(jsonMessage.uid === 'sensmitter_2' || jsonMessage.uid === 'sensmitter_3'){
          iotObject = new SensmitterTemperature(jsonMessage);
          temperatureChart.setTemperature(iotObject.temperature)
-         humidityChart.setHumidity(iotObject.timestamp,iotObject.humidity);
+         if(jsonMessage.uid === 'sensmitter_2'){
+          humidityChart.addSensmitter2(iotObject.timestamp,iotObject.humidity);
+         }
+         else if(jsonMessage.uid === 'sensmitter_3'){
+          humidityChart.addSensmitter3(iotObject.timestamp,iotObject.humidity);
+         }  
       }
       else if(jsonMessage.uid === 'lab_state'){
          iotObject = new LabState(jsonMessage);
@@ -155,7 +204,7 @@ var endpoint = createEndpoint(
       }
       else if(jsonMessage.uid === 'arduino_due_1'){
          iotObject = new Ardunio(jsonMessage);
-         humidityChart.setHumidity(iotObject.timestamp,iotObject.humidity);
+         humidityChart.addArdurino(iotObject.timestamp,iotObject.humidity);
       }
       else if(jsonMessage.uid === 'axis_old_camera'){
          iotObject = new CameraAxis(jsonMessage);
