@@ -1,3 +1,4 @@
+//  Set the region AccessKeyId and secret. Needs to be hidden
 AWS.config.update({
     region: "us-east-1",
     accessKeyId: "AKIAIVBVKDOAE3AASRHA",

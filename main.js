@@ -270,7 +270,7 @@ var endpoint = createEndpoint(
          return "Camera ACC8E7E6EAF recorded a movement " + this.movementDirection;
       }
    }
-
+   
    function EyeContact(json){
       this.timestamp = json.timestamp;
       this.lookingAtCamera = json.data.looking_towards_camera;
