@@ -108,7 +108,7 @@ function HumidityChart(humidity) {
   var options = {
     title: 'Humidity',
     hAxis: { title: 'Time', titleTextStyle: { color: '#333' } },
-    vAxis: { minValue: 0, textStyle:{ color: '#FFF'} },
+    vAxis: { minValue: 0, textStyle: { color: '#FFF' } },
     animation: {
       duration: 1500,
       easing: 'inAndOut'
@@ -117,7 +117,7 @@ function HumidityChart(humidity) {
       fill: '#fffff',
       fillOpacity: 0
     },
-    colors:['white'],
+    colors: ['white'],
     titleTextStyle: { color: '#FFF' },
     legendTextStyle: { color: '#FFF' },
     hAxis: {
@@ -126,7 +126,7 @@ function HumidityChart(humidity) {
   };
   var chart = new google.visualization.AreaChart(document.getElementById('humidity_chart_div'));
 
-  this.animationDur = function(time){
+  this.animationDur = function (time) {
     options.animation = time;
     console.log(options.animation)
   }
@@ -158,13 +158,13 @@ function HistoricalTemperatureLineChart() {
     title: 'Historical Temperature',
     curveType: 'function',
     hAxis: { title: 'Time', titleTextStyle: { color: '#333' } },
-    vAxis: { minValue: 21.5, textStyle:{ color: '#FFF'} },
+    vAxis: { minValue: 21.5, textStyle: { color: '#FFF' } },
     legend: { position: 'bottom' },
     backgroundColor: {
       fill: '#fffff',
       fillOpacity: 0
     },
-    colors:['white'],
+    colors: ['white'],
     titleTextStyle: { color: '#FFF' },
     legendTextStyle: { color: '#FFF' }
 
@@ -196,18 +196,11 @@ function HistoricalSoundAndTimeScatterChart() {
   this.data.addColumn('number', '');
 
   this.options = {
-    width: 1400,
-    height: 680,
-    backgroundColor: { //I cant change the damn color____!_)@!!)1
-      fill: 'transparent'
-    },
     chart: {
       title: 'Temperature / Time of day',
     },
-    hAxis: {title: 'Time of day'},
-    vAxis: {title: 'Temperature'},
-
-
+    hAxis: { title: 'Time of day' },
+    vAxis: { title: 'Temperature' },
   };
 
 

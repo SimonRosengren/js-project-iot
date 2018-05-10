@@ -6,6 +6,7 @@
     padding: 5rem;
 }
 
+
 .carousel-control-next,
 .carousel-control-prev {
     width: 10% !important;
@@ -33,20 +34,25 @@ h1 {
     color: inherit;
 }
 
-.inner-table{
-    display: table;
-    margin: auto;
-    padding: 2em 4em 2em 4em;
+.climate-tab-wrapper{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1em;
+    padding: 3em;
 }
 
-.inner-row{
-    display: table-row;
+
+.climate-gague-wrapper{
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    justify-items: center;
 }
 
-.inner-cell{
-    display: table-cell;
-    vertical-align: middle;
-    width: 200px;
-    height: 200px;
+.climate-chart-wrapper{
+    display: grid;
+    grid-template-columns:  2fr 2fr;
+    justify-items: center;
 }
+
+
 
