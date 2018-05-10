@@ -139,7 +139,26 @@ function HumidityChart(humidity) {
     legend: {position: 'top', maxLines: 6},
   };
   var chart = new google.visualization.AreaChart(document.getElementById('humidity_chart_div'));
+  google.visualization.events.addListener(chart, 'select', () => {
+    var sel = chart.getSelection();
+    try {
+      if(sel["0"].column === 1){
+        console.log("Sens 1");
+      }
+      else if(sel["0"].column === 2){
+        console.log("Sens 2");
+      }
+      else if(sel["0"].column === 3){
+        console.log("Sens 3");
+      }
+      else if(sel["0"].column === 4){
+        console.log("Arduino");
+      }
+    } catch (error) {
+     console.log("Error 100, read documentation for more info : " + error); 
+    }
 
+  });
   //  Function for the animation when the new value arrives
   this.animationDur = function(time){
     options.animation = time;

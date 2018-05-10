@@ -83,6 +83,8 @@ function drawActiveSlide(dir){
   }
 }
 
+
+
 function SigV4Utils(){}
 
 
