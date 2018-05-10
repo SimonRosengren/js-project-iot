@@ -113,7 +113,7 @@ function HumidityChart(humidity) {
     ['', 0,0,0,0]
   ];
   this.data = google.visualization.arrayToDataTable(tableData);
-  this.sensmitter1 = 0;
+  this.sensmitter1 = [];
   this.sensmitter2 = 0;
   this.sensmitter3 = 0;
   this.ardurino = 0;
@@ -144,6 +144,16 @@ function HumidityChart(humidity) {
     try {
       if(sel["0"].column === 1){
         console.log("Sens 1");
+        var tempData = [
+          ['Time', 'Sens 1'],
+          ['', 0]
+        ];
+        // Detta 'r feö
+        this.sensmitter1.forEach( item =>{
+          tempData.push(["", item]);
+        });
+        this.data = google.visualization.arrayToDataTable(tempData);
+        this.draw();
       }
       else if(sel["0"].column === 2){
         console.log("Sens 2");
@@ -171,14 +181,15 @@ function HumidityChart(humidity) {
   }
   this.addSensmitter1 = function (timestamp, data) {
 
-    this.sensmitter1 = data;
+    this.sensmitter1.push(data);
 
     var date = new Date(0)
     date.setSeconds(timestamp)
 
-    tableData.push([date, data,this.sensmitter2,this.sensmitter3,this.ardurino]);
+    tableData.push([date, this.sensmitter1[this.sensmitter1.length -1],this.sensmitter2,this.sensmitter3,this.ardurino]);
     this.data = google.visualization.arrayToDataTable(tableData);
     this.draw();
+    console.log(this.sensmitter1[this.sensmitter1.length - 1]);
   }
   this.addSensmitter2 = function (timestamp, data) {
 
@@ -186,7 +197,7 @@ function HumidityChart(humidity) {
 
     var date = new Date(0)
     date.setSeconds(timestamp)
-    tableData.push([date, this.sensmitter1,data,this.sensmitter3,this.ardurino]);
+    tableData.push([date, this.sensmitter1[this.sensmitter1.length - 1],data,this.sensmitter3,this.ardurino]);
     this.data = google.visualization.arrayToDataTable(tableData);
     this.draw();
   }
@@ -196,7 +207,7 @@ function HumidityChart(humidity) {
 
     var date = new Date(0)
     date.setSeconds(timestamp)
-    tableData.push([date, this.sensmitter1,this.sensmitter2,data,this.ardurino]);
+    tableData.push([date, this.sensmitter1[this.sensmitter1.length - 1],this.sensmitter2,data,this.ardurino]);
     this.data = google.visualization.arrayToDataTable(tableData);
     this.draw();
   }
@@ -206,7 +217,7 @@ function HumidityChart(humidity) {
 
     var date = new Date(0)
     date.setSeconds(timestamp)
-    tableData.push([date, this.sensmitter1,this.sensmitter2,this.sensmitter3,data]);
+    tableData.push([date, this.sensmitter1[this.sensmitter1.length - 1],this.sensmitter2,this.sensmitter3,data]);
     this.data = google.visualization.arrayToDataTable(tableData);
     this.draw();
   }
