@@ -37,53 +37,12 @@ google.charts.setOnLoadCallback(()=>{
 
    historicalTempLineChart = new HistoricalTemperatureLineChart();
    historicalTempLineChart.draw();
-   fillWithHistoricalData("Sensmitter01", historicalTempLineChart)
+   fillWithHistoricalData("SensorsIOTAPLab", historicalTempLineChart)
 
    historicalSoundScatterChart = new HistoricalSoundAndTimeScatterChart();
    historicalSoundScatterChart.draw();
-   fillScatterChartWithHistoricalData("Sensmitter01", historicalSoundScatterChart)
+   fillScatterChartWithHistoricalData("SensorsIOTAPLab", historicalSoundScatterChart)
 });
-// Event on when window resize, to redraw the chart.
-window.addEventListener('resize', () => {
-   humidityChart.animationDur(0.5);
-   humidityChart.draw();
-});
-
-//These are used for redrawing the charts.
-// Don't no if this is necessary now, but if you would like to redraw your chart, you now can do that.
-controlPrev.addEventListener("click", () => {
-  drawActiveSlide("<-");
-  
-});
-controlNext.addEventListener("click", () =>{
-  drawActiveSlide("->");
-});
-function drawActiveSlide(dir){
-  if(dir === '->'){
-    // Draw everything on the Lab-Slide
-    if(oList.children[0].className === 'active'){
-    }
-    // Draw everything on the Persons-Slide
-    else if(oList.children[1].className === 'active'){
-    }
-    // Draw everything on the Climate-Slide
-    else if(oList.children[2].className === 'active'){
-      humidityChart.draw();
-    }
-  }
-  else if(dir === '<-'){
-    // Draw everything on the Persons-Slide
-    if(oList.children[0].className === 'active'){
-    }
-    // Draw everything on the Climate-Slide
-    else if(oList.children[1].className === 'active'){
-    }
-    // Draw everything on Lab-Slide
-    else if(oList.children[2].className === 'active'){
-    }
-  }
-}
-
 
 
 function SigV4Utils(){}
@@ -208,6 +167,7 @@ var endpoint = createEndpoint(
       else if(jsonMessage.uid === 'arduino_due_1'){
          iotObject = new Ardunio(jsonMessage);
          humidityChart.addArdurino(iotObject.timestamp,iotObject.humidity);
+         temperatureChart.setTemperature(iotObject.temperature)
       }
       else if(jsonMessage.uid === 'axis_old_camera'){
          iotObject = new CameraAxis(jsonMessage);
@@ -349,7 +309,7 @@ var endpoint = createEndpoint(
 
    //   RGB-BAKGROUND-CHANGER
    //   Sets the brightness to the RGB value from the hue
-   var brightness = Math.floor(Math.random() * 255); // Ersätt detta värde med de värde som brightness har i IoT-labbet
+  /* var brightness = Math.floor(Math.random() * 255); // Ersätt detta värde med de värde som brightness har i IoT-labbet
    document.body.style.backgroundColor = "rgb(" + brightness + ", " + brightness + ", " + brightness + ")";
    //   Check if the brightness is higher than 150, if so set the text on the page to black. Else to white
    if(brightness < 150){
@@ -357,4 +317,22 @@ var endpoint = createEndpoint(
       document.getElementsByClassName('active')[0].style.backgroundColor = "#444";
    }else{
       document.body.style.color = "#000";
-   }
+   }*/
+
+   document.body.style.backgroundColor = "#333333";
+
+   function Interval(){
+    this.intervalAltSpelling = {};
+  
+    this.startInterval = function() {
+      this.intervalAltSpelling = window.setInterval(changeAltSpelling,2500);
+    };
+    this.stopInterval = function(){
+      window.clearInterval(this.intervalAltSpelling);
+    }
+  }
+  var countAlt = 0;
+  function changeAltSpelling(){
+    countAlt++;
+    $("#altSpelling").html(country.altSpellings[countAlt % country.altSpellings.length]);
+  }
