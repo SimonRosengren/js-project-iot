@@ -1,6 +1,7 @@
 google.charts.load('current', {'packages':['gauge']});
 google.charts.load('current', {'packages':['corechart']});
 google.charts.load('current', {'packages':['corechart', 'scatter']});
+google.charts.load('current', {'packages':['line']});
 
 var temperatureChart;
 var soundChart;
