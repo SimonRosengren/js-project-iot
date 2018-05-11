@@ -37,13 +37,14 @@ h1 {
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 1em;
-    padding: 3em;
+    padding: 1em 3em 1em 3em;
 }
 
 
 .climate-gague-wrapper{
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 15em;
     justify-items: center;
 }
 

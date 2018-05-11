@@ -109,8 +109,8 @@ function TemperatureChart(temperature) {
 
 function HumidityChart(humidity) {
   var tableData = [
-    ['Time', 'Sens 1', 'Sen 2', 'Sens 3','Ardur'],
-    ['', 0,0,0,0]
+    ['Time', 'Sens 1', 'Sen 2', 'Sens 3', 'Ardur'],
+    ['', 0, 0, 0, 0]
   ];
   this.data = google.visualization.arrayToDataTable(tableData);
   this.sensmitter1 = [];
@@ -120,64 +120,22 @@ function HumidityChart(humidity) {
   //  Design options
   var options = {
     title: 'Live Humidity',
-    hAxis: { title: 'Time', titleTextStyle: { color: '#333' } },
-    vAxis: { minValue: 0, textStyle:{ color: '#FFF'} },
-    animation: {
-      duration: 1500,
-      easing: 'inAndOut'
-    },
+    width: 750,
     backgroundColor: {
-      fill: '#fffff',
+      fill: '#FF0000',
       fillOpacity: 0
     },
-    colors:['white','gray','blue','yellow'],
-    titleTextStyle: { color: '#FFF' },
-    legendTextStyle: { color: '#FFF' },
-    hAxis: {
-      color: '#FFF',
-    },
-    legend: {position: 'top', maxLines: 6},
   };
-  var chart = new google.visualization.AreaChart(document.getElementById('humidity_chart_div'));
-  google.visualization.events.addListener(chart, 'select', () => {
-    var sel = chart.getSelection();
-    try {
-      if(sel["0"].column === 1){
-        console.log("Sens 1");
-        var tempData = [
-          ['Time', 'Sens 1'],
-          ['', 0]
-        ];
-        // Detta 'r feö
-        this.sensmitter1.forEach( item =>{
-          tempData.push(["", item]);
-        });
-        this.data = google.visualization.arrayToDataTable(tempData);
-        this.draw();
-      }
-      else if(sel["0"].column === 2){
-        console.log("Sens 2");
-      }
-      else if(sel["0"].column === 3){
-        console.log("Sens 3");
-      }
-      else if(sel["0"].column === 4){
-        console.log("Arduino");
-      }
-    } catch (error) {
-     console.log("Error 100, read documentation for more info : " + error); 
-    }
-
-  });
+  var chart = new google.charts.Line(document.getElementById('humidity_chart_div'));
   //  Function for the animation when the new value arrives
-  this.animationDur = function(time){
+  this.animationDur = function (time) {
     options.animation = time;
     console.log(options.animation)
   }
 
   //  Draw the graph
   this.draw = function () {
-    chart.draw(this.data, options);
+    chart.draw(this.data, google.charts.Line.convertOptions(options));
   }
   this.addSensmitter1 = function (timestamp, data) {
 
@@ -186,7 +144,7 @@ function HumidityChart(humidity) {
     var date = new Date(0)
     date.setSeconds(timestamp)
 
-    tableData.push([date, this.sensmitter1[this.sensmitter1.length -1],this.sensmitter2,this.sensmitter3,this.ardurino]);
+    tableData.push([date.getHours() + ":" + date.getMinutes(), this.sensmitter1[this.sensmitter1.length - 1], this.sensmitter2, this.sensmitter3, this.ardurino]);
     this.data = google.visualization.arrayToDataTable(tableData);
     this.draw();
     console.log(this.sensmitter1[this.sensmitter1.length - 1]);
@@ -197,7 +155,7 @@ function HumidityChart(humidity) {
 
     var date = new Date(0)
     date.setSeconds(timestamp)
-    tableData.push([date, this.sensmitter1[this.sensmitter1.length - 1],data,this.sensmitter3,this.ardurino]);
+    tableData.push([date.getHours() + ":" + date.getMinutes(), this.sensmitter1[this.sensmitter1.length - 1], data, this.sensmitter3, this.ardurino]);
     this.data = google.visualization.arrayToDataTable(tableData);
     this.draw();
   }
@@ -207,7 +165,7 @@ function HumidityChart(humidity) {
 
     var date = new Date(0)
     date.setSeconds(timestamp)
-    tableData.push([date, this.sensmitter1[this.sensmitter1.length - 1],this.sensmitter2,data,this.ardurino]);
+    tableData.push([date.getHours() + ":" + date.getMinutes(), this.sensmitter1[this.sensmitter1.length - 1], this.sensmitter2, data, this.ardurino]);
     this.data = google.visualization.arrayToDataTable(tableData);
     this.draw();
   }
@@ -217,7 +175,7 @@ function HumidityChart(humidity) {
 
     var date = new Date(0)
     date.setSeconds(timestamp)
-    tableData.push([date, this.sensmitter1[this.sensmitter1.length - 1],this.sensmitter2,this.sensmitter3,data]);
+    tableData.push([date.getHours() + ":" + date.getMinutes(), this.sensmitter1[this.sensmitter1.length - 1], this.sensmitter2, this.sensmitter3, data]);
     this.data = google.visualization.arrayToDataTable(tableData);
     this.draw();
   }
@@ -240,13 +198,13 @@ function HistoricalTemperatureLineChart() {
     title: 'Historical Temperature',
     curveType: 'function',
     hAxis: { title: 'Time', titleTextStyle: { color: '#333' } },
-    vAxis: { minValue: 21.5, textStyle:{ color: '#FFF'} },
+    vAxis: { minValue: 21.5, textStyle: { color: '#FFF' } },
     legend: { position: 'bottom' },
     backgroundColor: {
       fill: '#fffff',
       fillOpacity: 0
     },
-    colors:['white'],
+    colors: ['white'],
     titleTextStyle: { color: '#FFF' },
     legendTextStyle: { color: '#FFF' }
 
@@ -263,6 +221,7 @@ function HistoricalTemperatureLineChart() {
 
     this.data = google.visualization.arrayToDataTable(tableData);
     this.draw();
+
   }
 
   //  Function to draw graph
@@ -279,7 +238,7 @@ function HistoricalSoundAndTimeScatterChart() {
   this.data = new google.visualization.DataTable();
   this.data.addColumn('number', '');
   this.data.addColumn('number', '');
-  
+
   //  Design options
   this.options = {
     width: 1400,
@@ -290,8 +249,8 @@ function HistoricalSoundAndTimeScatterChart() {
     chart: {
       title: 'Temperature / Time of day',
     },
-    hAxis: {title: 'Time of day'},
-    vAxis: {title: 'Temperature'},
+    hAxis: { title: 'Time of day' },
+    vAxis: { title: 'Temperature' },
 
 
   };
