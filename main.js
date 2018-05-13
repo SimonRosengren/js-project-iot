@@ -26,19 +26,26 @@ google.charts.setOnLoadCallback(()=>{
    temperatureChart = new TemperatureChart(0);
    temperatureChart.draw();
 
+   // Create a new SoundLevelChart and callings it's draw funtion
    soundChart = new SoundLevelChart(0);
    soundChart.draw();
-
+  
+   // Create a new PressureChart and callings it's draw funtion
    pressureChart = new PressureChart(1000);
    pressureChart.draw();
 
+  // Create a new HumidityChart and callings it's draw funtion
    humidityChart = new HumidityChart(10);
    humidityChart.draw();
 
+  // Create a new HistoricalTemperatureLineChart and callings it's draw funtion,
+  // and fill it with database.
    historicalTempLineChart = new HistoricalTemperatureLineChart();
    historicalTempLineChart.draw();
-   fillWithHistoricalData("SensorsIOTAPLab", historicalTempLineChart)
+   fillWithHistoricalData("SensorsIOTAPLab", historicalTempLineChart);
 
+  // Create a new HistoricalSoundAndTimeScatterChart and callings it's draw funtion,
+  // and fill it with data from database.
    historicalSoundScatterChart = new HistoricalSoundAndTimeScatterChart();
    historicalSoundScatterChart.draw();
    fillScatterChartWithHistoricalData("SensorsIOTAPLab", historicalSoundScatterChart)
@@ -117,11 +124,12 @@ var endpoint = createEndpoint(
    client.onMessageArrived = onMessage;
    client.onConnectionLost = function(e) { console.log(e) };
 
+   //   Client subscribes to all topics
    function subscribe() {
       client.subscribe("#");
       console.log("subscribed");
    }
-
+   //   Send a message to MQTT Server
    function send(content) {
       var message = new Paho.MQTT.Message(content);
       message.destinationName = "Test/chat";
@@ -320,19 +328,3 @@ var endpoint = createEndpoint(
    }*/
 
    document.body.style.backgroundColor = "#333333";
-
-   function Interval(){
-    this.intervalAltSpelling = {};
-  
-    this.startInterval = function() {
-      this.intervalAltSpelling = window.setInterval(changeAltSpelling,2500);
-    };
-    this.stopInterval = function(){
-      window.clearInterval(this.intervalAltSpelling);
-    }
-  }
-  var countAlt = 0;
-  function changeAltSpelling(){
-    countAlt++;
-    $("#altSpelling").html(country.altSpellings[countAlt % country.altSpellings.length]);
-  }
