@@ -1,3 +1,4 @@
+// Load the Google Charts
 google.charts.load('current', {'packages':['gauge']});
 google.charts.load('current', {'packages':['corechart']});
 google.charts.load('current', {'packages':['corechart', 'scatter']});
@@ -11,15 +12,8 @@ var humidityChart;
 var historicalTempLineChart;
 var historicalSoundScatterChart;
 
-var controlPrev = document.getElementById("controlPrev");
-var controlNext = document.getElementById("controlNext");
-var oList = document.getElementById("indicator");
 
-console.log(oList.children[1]);
-
-
-
-
+// When loaded then create all the charts
 google.charts.setOnLoadCallback(()=>{
 
    //Creating a new TemperatureChart and calling it's draw function
@@ -52,6 +46,7 @@ google.charts.setOnLoadCallback(()=>{
 });
 
 
+// Constructor function for contecting to the MTQQ Amazon Server
 function SigV4Utils(){}
 
 
