@@ -24,8 +24,8 @@ function fillWithHistoricalData(table, lineChart) {
             //Takes only every 10th datapoint
             for (let index = 0; index < data.Items.length; index += 10) {
                 var t = new Date(0);
-                t.setSeconds(data.Items[index].payload.Ts);
-                arr.push([t, data.Items[index].payload.Data.Temperature])
+                t.setSeconds(data.Items[index].payload.timestamp);
+                arr.push([t, data.Items[index].payload.data.temperature])
             }
             lineChart.addData(arr)
         }
@@ -43,12 +43,14 @@ function fillScatterChartWithHistoricalData(table, scatterChart) {
         if (err) {
             console.log(err)
         } else {
+            
             var arr = []
+
             //Takes only every 10th datapoint
-            for (let index = 0; index < data.Items.length; index += 10) {
+            for (let index = 0; index < data.Items.length; index ++) {
                 var t = new Date(0);
-                t.setSeconds(data.Items[index].payload.Ts);
-                arr.push([t.getHours() + "" + t.getMinutes(), data.Items[index].payload.Data.Temperature])
+                t.setSeconds(data.Items[index].payload.timestamp);
+                arr.push([[t.getHours(),t.getMinutes(),t.getSeconds()], data.Items[index].payload.data.sound_level])
             }
             scatterChart.addData(arr)
         }

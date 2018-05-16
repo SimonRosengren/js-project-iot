@@ -68,41 +68,53 @@ function SoundLevelChart(soundLevel) {
 
 //  Function for the temperature gauge
 
-function TemperatureChart(temperature) {
-  this.data = google.visualization.arrayToDataTable([
-    ['Label', 'Value'],
-    ['Temperature', temperature],
+function TemperatureChart() {
+  var data = google.visualization.arrayToDataTable([
+    ['Temperature', 'C'],
+    ['temp', 35],
+    ['sda', 100-35]
   ]);
-
-  //  Make width and height auto fit div
+  // Design 
   var options = {
-    yellowColor: '#8080ff',
-    redColor: '#ff7575',
-    greenColor: '#b3ffb3',
-    width: 160, height: 200,
-    redFrom: 27, redTo: 30,
-    greenFrom: 18, greenTo: 27,
-    yellowFrom: 15, yellowTo: 18,
-    minorTicks: 10,
-    max: 30,
-    min: 15,
+    legend: 'none',
+    pieSliceText: 'none',
+    pieStartAngle: 0,
+    pieSliceBorderColor: 'transparent',
+    backgroundColor: {
+      fillOpacity: 0
+    },
     animation: {
       duration: 2500,
       easing: 'inAndOut'
+    },
+    pieHole: 0.7,
+    tooltip: { trigger: 'none' },
+    pieSliceTextStyle: {
+      color: 'white', fontSize: 16
+    },
+    slices: {
+      0: { color: '#f77f2e' },
+      1: { color: 'transparent'}
     }
   };
 
-  var chart = new google.visualization.Gauge(document.getElementById('temp_chart_div'));
+  var chart = new google.visualization.PieChart(document.getElementById('temp_chart_div'));
 
-  //  Draw the graph
-  this.draw = function () {
-    chart.draw(this.data, options)
-  }
-  //  Function to set the temperature when it's live
-  this.setTemperature = function (temperature) {
-    this.data.setValue(0, 1, temperature);
+  // Set input data to the new tempature
+  // Then draws the charts.
+  this.setTemperature = function(temp) {
+    data = google.visualization.arrayToDataTable([
+      ['Temperature', 'C'],
+      ['temp', temp],
+      ['sda', 100 - temp]
+    ]);
     this.draw();
   }
+  // Draw the chart
+  this.draw = function(){
+    chart.draw(data, options);
+  }
+
 }
 
 //  Function for the humidity graph
@@ -137,6 +149,8 @@ function HumidityChart(humidity) {
   this.draw = function () {
     chart.draw(this.data, google.charts.Line.convertOptions(options));
   }
+  // Adds a new value to Sensmitter 1 graf.
+  // Then redraws the chart.
   this.addSensmitter1 = function (timestamp, data) {
 
     this.sensmitter1.push(data);
@@ -147,8 +161,9 @@ function HumidityChart(humidity) {
     tableData.push([date.getHours() + ":" + date.getMinutes(), this.sensmitter1[this.sensmitter1.length - 1], this.sensmitter2, this.sensmitter3, this.ardurino]);
     this.data = google.visualization.arrayToDataTable(tableData);
     this.draw();
-    console.log(this.sensmitter1[this.sensmitter1.length - 1]);
   }
+  // Adds a new value to Sensmitter 2 graf.
+  // Then redraws the chart.
   this.addSensmitter2 = function (timestamp, data) {
 
     this.sensmitter2 = data;
@@ -159,6 +174,8 @@ function HumidityChart(humidity) {
     this.data = google.visualization.arrayToDataTable(tableData);
     this.draw();
   }
+  // Adds a new value to Sensmitter 3 graf.
+  // Then redraws the chart.
   this.addSensmitter3 = function (timestamp, data) {
 
     this.sensmitter3 = data;
@@ -169,6 +186,8 @@ function HumidityChart(humidity) {
     this.data = google.visualization.arrayToDataTable(tableData);
     this.draw();
   }
+  // Adds a new value to Ardurino graf.
+  // Then redraws the chart.
   this.addArdurino = function (timestamp, data) {
 
     this.ardurino = data;
@@ -186,12 +205,9 @@ function HumidityChart(humidity) {
 //  Function for the historical temprature graph
 function HistoricalTemperatureLineChart() {
 
-  var tableData = [
-    ['Time', 'Temp'],
-    ['', 21.6]    //Varför måste vi ha en tom här? Bra fråga asså men det är typ om man vill en text under grafen 
-  ];
-
-  this.data = google.visualization.arrayToDataTable(tableData);
+  this.data = new google.visualization.DataTable();
+  this.data.addColumn('date', 'Date');
+  this.data.addColumn('number', 'Temperature');
 
   //  Design options
   var options = {
@@ -214,12 +230,7 @@ function HistoricalTemperatureLineChart() {
 
   //  Add historical data to the graph
   this.addData = function (tempData) {
-    //  Divide the array of arrays into seperate arrays and push them
-    for (let index = 0; index < tempData.length; index++) {
-      tableData.push(tempData[index]);
-    }
-
-    this.data = google.visualization.arrayToDataTable(tableData);
+    this.data.addRows(tempData)
     this.draw();
 
   }
@@ -236,13 +247,12 @@ function HistoricalTemperatureLineChart() {
 function HistoricalSoundAndTimeScatterChart() {
 
   this.data = new google.visualization.DataTable();
-  this.data.addColumn('number', '');
-  this.data.addColumn('number', '');
+  this.data.addColumn('timeofday', 'Time of day');
+  this.data.addColumn('number', 'dB');
 
   //  Design options
   this.options = {
-    width: 1400,
-    height: 680,
+
     backgroundColor: { // I cant change the damn color____!_)@!!)1
       fill: 'transparent'
     },
@@ -260,16 +270,12 @@ function HistoricalSoundAndTimeScatterChart() {
 
   //  Add historical data to the graph
   this.addData = function (tempData) {
-    var arr = []
-    tempData.forEach(element => {
-      arr.push([Number(element[0]), parseFloat(element[1])])
-    });
-    this.data.addRows(arr)
+    this.data.addRows(tempData)
     this.draw();
   }
 
   // Function to draw graph
   this.draw = function () {
-    this.chart.draw(this.data, this.options);
+    this.chart.draw(this.data, google.charts.Line.convertOptions(this.options));
   }
 }

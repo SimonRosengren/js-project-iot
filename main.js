@@ -1,3 +1,4 @@
+// Load the Google Charts
 google.charts.load('current', {'packages':['gauge']});
 google.charts.load('current', {'packages':['corechart']});
 google.charts.load('current', {'packages':['corechart', 'scatter']});
@@ -11,81 +12,41 @@ var humidityChart;
 var historicalTempLineChart;
 var historicalSoundScatterChart;
 
-var controlPrev = document.getElementById("controlPrev");
-var controlNext = document.getElementById("controlNext");
-var oList = document.getElementById("indicator");
 
-console.log(oList.children[1]);
-
-
-
-
+// When loaded then create all the charts
 google.charts.setOnLoadCallback(()=>{
 
    //Creating a new TemperatureChart and calling it's draw function
    temperatureChart = new TemperatureChart(0);
    temperatureChart.draw();
 
+   // Create a new SoundLevelChart and callings it's draw funtion
    soundChart = new SoundLevelChart(0);
    soundChart.draw();
 
+   // Create a new PressureChart and callings it's draw funtion
    pressureChart = new PressureChart(1000);
    pressureChart.draw();
 
+  // Create a new HumidityChart and callings it's draw funtion
    humidityChart = new HumidityChart(10);
    humidityChart.draw();
 
+  // Create a new HistoricalTemperatureLineChart and callings it's draw funtion,
+  // and fill it with database.
    historicalTempLineChart = new HistoricalTemperatureLineChart();
    historicalTempLineChart.draw();
-   fillWithHistoricalData("Sensmitter01", historicalTempLineChart)
+   fillWithHistoricalData("SensorsIOTAPLab", historicalTempLineChart);
 
+  // Create a new HistoricalSoundAndTimeScatterChart and callings it's draw funtion,
+  // and fill it with data from database.
    historicalSoundScatterChart = new HistoricalSoundAndTimeScatterChart();
    historicalSoundScatterChart.draw();
-   fillScatterChartWithHistoricalData("Sensmitter01", historicalSoundScatterChart)
-});
-// Event on when window resize, to redraw the chart.
-window.addEventListener('resize', () => {
-   humidityChart.animationDur(0.5);
-   humidityChart.draw();
+   fillScatterChartWithHistoricalData("SensorsIOTAPLab", historicalSoundScatterChart)
 });
 
-//These are used for redrawing the charts.
-// Don't no if this is necessary now, but if you would like to redraw your chart, you now can do that.
-controlPrev.addEventListener("click", () => {
-  drawActiveSlide("<-");
 
-});
-controlNext.addEventListener("click", () =>{
-  drawActiveSlide("->");
-});
-function drawActiveSlide(dir){
-  if(dir === '->'){
-    // Draw everything on the Lab-Slide
-    if(oList.children[0].className === 'active'){
-    }
-    // Draw everything on the Persons-Slide
-    else if(oList.children[1].className === 'active'){
-    }
-    // Draw everything on the Climate-Slide
-    else if(oList.children[2].className === 'active'){
-      humidityChart.draw();
-    }
-  }
-  else if(dir === '<-'){
-    // Draw everything on the Persons-Slide
-    if(oList.children[0].className === 'active'){
-    }
-    // Draw everything on the Climate-Slide
-    else if(oList.children[1].className === 'active'){
-    }
-    // Draw everything on Lab-Slide
-    else if(oList.children[2].className === 'active'){
-    }
-  }
-}
-
-
-
+// Constructor function for contecting to the MTQQ Amazon Server
 function SigV4Utils(){}
 
 
@@ -158,11 +119,12 @@ var endpoint = createEndpoint(
    client.onMessageArrived = onMessage;
    client.onConnectionLost = function(e) { console.log(e) };
 
+   //   Client subscribes to all topics
    function subscribe() {
       client.subscribe("#");
       console.log("subscribed");
    }
-
+   //   Send a message to MQTT Server
    function send(content) {
       var message = new Paho.MQTT.Message(content);
       message.destinationName = "Test/chat";
@@ -208,6 +170,7 @@ var endpoint = createEndpoint(
       else if(jsonMessage.uid === 'arduino_due_1'){
          iotObject = new Ardunio(jsonMessage);
          humidityChart.addArdurino(iotObject.timestamp,iotObject.humidity);
+         temperatureChart.setTemperature(iotObject.temperature)
       }
       else if(jsonMessage.uid === 'axis_old_camera'){
          iotObject = new CameraAxis(jsonMessage);
@@ -349,12 +312,14 @@ var endpoint = createEndpoint(
 
    //   RGB-BAKGROUND-CHANGER
    //   Sets the brightness to the RGB value from the hue
-   var brightness = Math.floor(Math.random() * 255); // Ersätt detta värde med de värde som brightness har i IoT-labbet
+  /* var brightness = Math.floor(Math.random() * 255); // Ersätt detta värde med de värde som brightness har i IoT-labbet
    document.body.style.backgroundColor = "rgb(" + brightness + ", " + brightness + ", " + brightness + ")";
    //   Check if the brightness is higher than 150, if so set the text on the page to black. Else to white
    if(brightness < 150){
       document.body.style.color = "#fff"; // sets the text-color of the body to white
       document.getElementsByClassName('active')[0].style.backgroundColor = "#444"; // sets the background-color of the active navigation tab to dark-grey
    }else{
-      document.body.style.color = "#000"; // sets the background-color of the body to black
-   }
+      document.body.style.color = "#000";
+   }*/
+
+   document.body.style.backgroundColor = "#333333";
