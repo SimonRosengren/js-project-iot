@@ -53,7 +53,7 @@ window.addEventListener('resize', () => {
 // Don't no if this is necessary now, but if you would like to redraw your chart, you now can do that.
 controlPrev.addEventListener("click", () => {
   drawActiveSlide("<-");
-  
+
 });
 controlNext.addEventListener("click", () =>{
   drawActiveSlide("->");
@@ -193,7 +193,7 @@ var endpoint = createEndpoint(
          }
          else if(jsonMessage.uid === 'sensmitter_3'){
           humidityChart.addSensmitter3(iotObject.timestamp,iotObject.humidity);
-         }  
+         }
       }
       else if(jsonMessage.uid === 'lab_state'){
          iotObject = new LabState(jsonMessage);
@@ -353,8 +353,8 @@ var endpoint = createEndpoint(
    document.body.style.backgroundColor = "rgb(" + brightness + ", " + brightness + ", " + brightness + ")";
    //   Check if the brightness is higher than 150, if so set the text on the page to black. Else to white
    if(brightness < 150){
-      document.body.style.color = "#fff";
-      document.getElementsByClassName('active')[0].style.backgroundColor = "#444";
+      document.body.style.color = "#fff"; // sets the text-color of the body to white
+      document.getElementsByClassName('active')[0].style.backgroundColor = "#444"; // sets the background-color of the active navigation tab to dark-grey
    }else{
-      document.body.style.color = "#000";
+      document.body.style.color = "#000"; // sets the background-color of the body to black
    }

@@ -1,7 +1,16 @@
+:root{
+   --main-font: 'Roboto', sans-serif;
+}
+
+
+body{
+   font-family: var(--main-font);
+   font-weight: 200;
+}
 .carousel-item-next,
 .carousel-item-prev,
 .carousel-item.active {
-    height: 100vh;
+    height: 100%;
     /* background-color: #333; */
     padding: 5rem;
 }
@@ -34,27 +43,44 @@ h1 {
 }
 
 .climate-tab-wrapper{
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 1em;
-    padding: 1em 3em 1em 3em;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
 }
 
 
-.climate-gague-wrapper{
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    grid-template-rows: 15em;
-    justify-items: center;
+.climate-wrapper{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    margin: 2rem 0;
+}
+.climate-wrapper div p{
+   text-align: center;
 }
 
-.climate-chart-wrapper{
-    display: grid;
-    grid-template-columns:  2fr 2fr;
-    justify-items: center;
+#historical-wrapper{
+   width: 100%;
+   display: flex;
+    align-items: center;
+    flex-direction: column;
 }
+#historical-wrapper form{
+   display: inline-block;
+}
+#historical-wrapper form input{
+   padding: 10px;
+   border: 0;
+   color: #aaa;
+   font-family: var(--main-font);
+   font-weight: 200;
+   text-transform: uppercase;
 
-
+}
+#historical_temp_chart_div{
+   width: 100%;
+}
 
 h2 {
     text-align: center;
