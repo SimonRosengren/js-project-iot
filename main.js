@@ -1,3 +1,4 @@
+// Load the Google Charts
 google.charts.load('current', {'packages':['gauge']});
 google.charts.load('current', {'packages':['corechart']});
 google.charts.load('current', {'packages':['corechart', 'scatter']});
@@ -11,40 +12,41 @@ var humidityChart;
 var historicalTempLineChart;
 var historicalSoundScatterChart;
 
-var controlPrev = document.getElementById("controlPrev");
-var controlNext = document.getElementById("controlNext");
-var oList = document.getElementById("indicator");
 
-console.log(oList.children[1]);
-
-
-
-
+// When loaded then create all the charts
 google.charts.setOnLoadCallback(()=>{
 
    //Creating a new TemperatureChart and calling it's draw function
    temperatureChart = new TemperatureChart(0);
    temperatureChart.draw();
 
+   // Create a new SoundLevelChart and callings it's draw funtion
    soundChart = new SoundLevelChart(0);
    soundChart.draw();
 
+   // Create a new PressureChart and callings it's draw funtion
    pressureChart = new PressureChart(1000);
    pressureChart.draw();
 
+  // Create a new HumidityChart and callings it's draw funtion
    humidityChart = new HumidityChart(10);
    humidityChart.draw();
 
+  // Create a new HistoricalTemperatureLineChart and callings it's draw funtion,
+  // and fill it with database.
    historicalTempLineChart = new HistoricalTemperatureLineChart();
    historicalTempLineChart.draw();
-   fillWithHistoricalData("SensorsIOTAPLab", historicalTempLineChart)
+   fillWithHistoricalData("SensorsIOTAPLab", historicalTempLineChart);
 
+  // Create a new HistoricalSoundAndTimeScatterChart and callings it's draw funtion,
+  // and fill it with data from database.
    historicalSoundScatterChart = new HistoricalSoundAndTimeScatterChart();
    historicalSoundScatterChart.draw();
    fillScatterChartWithHistoricalData("SensorsIOTAPLab", historicalSoundScatterChart)
 });
 
 
+// Constructor function for contecting to the MTQQ Amazon Server
 function SigV4Utils(){}
 
 
@@ -117,11 +119,12 @@ var endpoint = createEndpoint(
    client.onMessageArrived = onMessage;
    client.onConnectionLost = function(e) { console.log(e) };
 
+   //   Client subscribes to all topics
    function subscribe() {
       client.subscribe("#");
       console.log("subscribed");
    }
-
+   //   Send a message to MQTT Server
    function send(content) {
       var message = new Paho.MQTT.Message(content);
       message.destinationName = "Test/chat";
@@ -152,7 +155,7 @@ var endpoint = createEndpoint(
          }
          else if(jsonMessage.uid === 'sensmitter_3'){
           humidityChart.addSensmitter3(iotObject.timestamp,iotObject.humidity);
-         }  
+         }
       }
       else if(jsonMessage.uid === 'lab_state'){
          iotObject = new LabState(jsonMessage);
@@ -313,26 +316,10 @@ var endpoint = createEndpoint(
    document.body.style.backgroundColor = "rgb(" + brightness + ", " + brightness + ", " + brightness + ")";
    //   Check if the brightness is higher than 150, if so set the text on the page to black. Else to white
    if(brightness < 150){
-      document.body.style.color = "#fff";
-      document.getElementsByClassName('active')[0].style.backgroundColor = "#444";
+      document.body.style.color = "#fff"; // sets the text-color of the body to white
+      document.getElementsByClassName('active')[0].style.backgroundColor = "#444"; // sets the background-color of the active navigation tab to dark-grey
    }else{
       document.body.style.color = "#000";
    }*/
 
    document.body.style.backgroundColor = "#333333";
-
-   function Interval(){
-    this.intervalAltSpelling = {};
-  
-    this.startInterval = function() {
-      this.intervalAltSpelling = window.setInterval(changeAltSpelling,2500);
-    };
-    this.stopInterval = function(){
-      window.clearInterval(this.intervalAltSpelling);
-    }
-  }
-  var countAlt = 0;
-  function changeAltSpelling(){
-    countAlt++;
-    $("#altSpelling").html(country.altSpellings[countAlt % country.altSpellings.length]);
-  }

@@ -74,7 +74,7 @@ function TemperatureChart() {
     ['temp', 35],
     ['sda', 100-35]
   ]);
-
+  // Design 
   var options = {
     legend: 'none',
     pieSliceText: 'none',
@@ -100,6 +100,8 @@ function TemperatureChart() {
 
   var chart = new google.visualization.PieChart(document.getElementById('temp_chart_div'));
 
+  // Set input data to the new tempature
+  // Then draws the charts.
   this.setTemperature = function(temp) {
     data = google.visualization.arrayToDataTable([
       ['Temperature', 'C'],
@@ -108,11 +110,9 @@ function TemperatureChart() {
     ]);
     this.draw();
   }
-
+  // Draw the chart
   this.draw = function(){
     chart.draw(data, options);
-
-    
   }
 
 }
@@ -149,6 +149,8 @@ function HumidityChart(humidity) {
   this.draw = function () {
     chart.draw(this.data, google.charts.Line.convertOptions(options));
   }
+  // Adds a new value to Sensmitter 1 graf.
+  // Then redraws the chart.
   this.addSensmitter1 = function (timestamp, data) {
 
     this.sensmitter1.push(data);
@@ -159,8 +161,9 @@ function HumidityChart(humidity) {
     tableData.push([date.getHours() + ":" + date.getMinutes(), this.sensmitter1[this.sensmitter1.length - 1], this.sensmitter2, this.sensmitter3, this.ardurino]);
     this.data = google.visualization.arrayToDataTable(tableData);
     this.draw();
-    console.log(this.sensmitter1[this.sensmitter1.length - 1]);
   }
+  // Adds a new value to Sensmitter 2 graf.
+  // Then redraws the chart.
   this.addSensmitter2 = function (timestamp, data) {
 
     this.sensmitter2 = data;
@@ -171,6 +174,8 @@ function HumidityChart(humidity) {
     this.data = google.visualization.arrayToDataTable(tableData);
     this.draw();
   }
+  // Adds a new value to Sensmitter 3 graf.
+  // Then redraws the chart.
   this.addSensmitter3 = function (timestamp, data) {
 
     this.sensmitter3 = data;
@@ -181,6 +186,8 @@ function HumidityChart(humidity) {
     this.data = google.visualization.arrayToDataTable(tableData);
     this.draw();
   }
+  // Adds a new value to Ardurino graf.
+  // Then redraws the chart.
   this.addArdurino = function (timestamp, data) {
 
     this.ardurino = data;
