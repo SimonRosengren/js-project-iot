@@ -45,6 +45,16 @@ google.charts.setOnLoadCallback(()=>{
    fillScatterChartWithHistoricalData("SensorsIOTAPLab", historicalSoundScatterChart)
 });
 
+function GetWidth(){
+  return window.innerWidth * 0.4;
+}
+
+window.onresize =  function(){
+  humidityChart.options.width = GetWidth();
+  console.log(humidityChart.options);
+  
+  humidityChart.draw();
+}
 
 // Constructor function for contecting to the MTQQ Amazon Server
 function SigV4Utils(){}

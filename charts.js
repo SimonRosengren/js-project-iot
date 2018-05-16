@@ -130,9 +130,9 @@ function HumidityChart(humidity) {
   this.sensmitter3 = 0;
   this.ardurino = 0;
   //  Design options
-  var options = {
+  this.options = {
     title: 'Live Humidity',
-    width: 750,
+    width: GetWidth(),
     backgroundColor: {
       fill: '#FF0000',
       fillOpacity: 0
@@ -147,7 +147,7 @@ function HumidityChart(humidity) {
 
   //  Draw the graph
   this.draw = function () {
-    chart.draw(this.data, google.charts.Line.convertOptions(options));
+    chart.draw(this.data, google.charts.Line.convertOptions(this.options));
   }
   // Adds a new value to Sensmitter 1 graf.
   // Then redraws the chart.
