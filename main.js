@@ -12,6 +12,8 @@ var humidityChart;
 var historicalTempLineChart;
 var historicalSoundScatterChart;
 
+var mashUp;
+
 
 // When loaded then create all the charts
 google.charts.setOnLoadCallback(()=>{
@@ -44,6 +46,10 @@ google.charts.setOnLoadCallback(()=>{
    historicalSoundScatterChart.draw();
    fillScatterChartWithHistoricalData("SensorsIOTAPLab", historicalSoundScatterChart)
 });
+
+
+mashUp = new ThreeDimMashUpChart();
+mashUp.draw();
 
 function GetWidth(){
   return window.innerWidth * 0.4;
