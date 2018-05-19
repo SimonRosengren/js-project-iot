@@ -353,3 +353,41 @@ function ThreeDimMashUpChart () {
     Plotly.plot('mashChart_div',data,layout);
    }
   }
+
+//  Function for historical temprature graph
+//  Funktionen heter Sound and time SIMON???
+function HistoricalHumidityChart() {
+
+  this.data = new google.visualization.DataTable();
+  this.data.addColumn('date', 'Date');
+  this.data.addColumn('number', 'Humidity');
+
+  //  Design options
+  this.options = {
+
+    backgroundColor: { // I cant change the damn color____!_)@!!)1
+      fill: 'transparent'
+    },
+    chart: {
+      title: 'Humidity / Time of day',
+    },
+    hAxis: { title: 'Time of day' },
+    vAxis: { title: 'Humidity' },
+
+
+  };
+
+
+  this.chart = new google.visualization.LineChart(document.getElementById('historical_humidity_chart_div'));
+
+  //  Add historical data to the graph
+  this.addData = function (tempData) {
+    this.data.addRows(tempData)
+    this.draw();
+  }
+
+  // Function to draw graph
+  this.draw = function () {
+    this.chart.draw(this.data, google.charts.Line.convertOptions(this.options));
+  }
+}

@@ -11,6 +11,7 @@ var iotObject;
 var humidityChart;
 var historicalTempLineChart;
 var historicalSoundScatterChart;
+var historicalHumidityChart;
 
 var mashUp;
 
@@ -45,6 +46,11 @@ google.charts.setOnLoadCallback(()=>{
    historicalSoundScatterChart = new HistoricalSoundAndTimeScatterChart();
    historicalSoundScatterChart.draw();
    fillScatterChartWithHistoricalData("SensorsIOTAPLab", historicalSoundScatterChart)
+
+
+   historicalHumidityChart = new HistoricalHumidityChart();
+   historicalHumidityChart.draw();
+   fillHistoricalHumidityChart("SensorsIOTAPLab",historicalHumidityChart);
 });
 
 

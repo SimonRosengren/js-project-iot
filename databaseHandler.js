@@ -56,3 +56,30 @@ function fillScatterChartWithHistoricalData(table, scatterChart) {
         }
     }
 }
+
+function fillHistoricalHumidityChart(table, humidityChart) {
+    var params = {
+        TableName: table
+    };
+
+    docClient.scan(params, onScan);
+
+    function onScan(err, data) {
+        if (err) {
+            console.log(err)
+        } else {
+            
+            var arr = []
+
+            //Takes only every 10th datapoint
+            for (let index = 0; index < data.Items.length; index ++) {
+                if(data.Items[index].payload.uid === 'arduino_due_1'){
+                    var t = new Date(0);
+                    t.setSeconds(data.Items[index].payload.timestamp);
+                    arr.push([t, data.Items[index].payload.data.humidity])
+                }
+            }
+            humidityChart.addData(arr)
+        }
+    }
+}
