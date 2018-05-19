@@ -31,7 +31,7 @@ function fillWithHistoricalData(table, lineChart) {
         }
     }
 }
-
+// Function for filling the Sound Histroical chart with data.
 function fillScatterChartWithHistoricalData(table, scatterChart) {
     var params = {
         TableName: table
@@ -56,7 +56,7 @@ function fillScatterChartWithHistoricalData(table, scatterChart) {
         }
     }
 }
-
+// Function for filling the Humdity Historical chart with data.
 function fillHistoricalHumidityChart(table, humidityChart) {
     var params = {
         TableName: table

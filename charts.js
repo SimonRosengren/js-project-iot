@@ -354,8 +354,7 @@ function ThreeDimMashUpChart () {
    }
   }
 
-//  Function for historical temprature graph
-//  Funktionen heter Sound and time SIMON???
+//  Function for historical humidity graph
 function HistoricalHumidityChart() {
 
   this.data = new google.visualization.DataTable();
