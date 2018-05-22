@@ -2,24 +2,36 @@
 
 function PressureChart(pressure) {
   this.data = google.visualization.arrayToDataTable([
-    ['Label', 'Value'],
-    ['psi', pressure],
+    ['Temperature', 'C'],
+    ['temp', pressure],
+    ['sda', 4000-pressure]
   ]);
 
-  //  Make width and height auto fit div
+  // Design 
   var options = {
-    width: 160, height: 200,
-    minorTicks: 5,
-    majorTicks: ["0", "", "1000", "", "2000", "", "3000", "", "4000"],
-    max: 4000,
-    min: 0,
+    legend: 'none',
+    pieSliceText: 'none',
+    pieStartAngle: 0,
+    pieSliceBorderColor: 'transparent',
+    backgroundColor: {
+      fillOpacity: 0
+    },
     animation: {
       duration: 2500,
       easing: 'inAndOut'
+    },
+    pieHole: 0.7,
+    tooltip: { trigger: 'none' },
+    pieSliceTextStyle: {
+      color: 'white', fontSize: 16
+    },
+    slices: {
+      0: { color: '#f77f2e' },
+      1: { color: 'transparent'}
     }
   };
 
-  var chart = new google.visualization.Gauge(document.getElementById('pressure_chart_div'));
+  var chart = new google.visualization.PieChart(document.getElementById('pressure_chart_div'));
 
   //  Draw the graph
   this.draw = function () {
@@ -27,7 +39,11 @@ function PressureChart(pressure) {
   }
   //  Function to set the new pressure when it's live
   this.setPressureValue = function (pressure) {
-    this.data.setValue(0, 1, pressure);
+    this.data = google.visualization.arrayToDataTable([
+      ['Pressure', 'psi'],
+      ['pressure', pressure],
+      ['rest', 4000 - pressure]
+    ]);
     this.draw();
   }
 }

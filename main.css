@@ -2,10 +2,10 @@
    --main-font: 'Roboto', sans-serif;
 }
 
-
 body{
    font-family: var(--main-font);
    font-weight: 200;
+   color: white !important;
 }
 .carousel-item-next,
 .carousel-item-prev,
