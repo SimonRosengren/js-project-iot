@@ -11,6 +11,9 @@ var iotObject;
 var humidityChart;
 var historicalTempLineChart;
 var historicalSoundScatterChart;
+var historicalHumidityChart;
+
+var mashUp;
 
 
 // When loaded then create all the charts
@@ -43,8 +46,27 @@ google.charts.setOnLoadCallback(()=>{
    historicalSoundScatterChart = new HistoricalSoundAndTimeScatterChart();
    historicalSoundScatterChart.draw();
    fillScatterChartWithHistoricalData("SensorsIOTAPLab", historicalSoundScatterChart)
+
+
+   historicalHumidityChart = new HistoricalHumidityChart();
+   historicalHumidityChart.draw();
+   fillHistoricalHumidityChart("SensorsIOTAPLab",historicalHumidityChart);
 });
 
+
+mashUp = new ThreeDimMashUpChart();
+mashUp.draw();
+
+function GetWidth(){
+  return window.innerWidth * 0.4;
+}
+
+window.onresize =  function(){
+  humidityChart.options.width = GetWidth();
+  console.log(humidityChart.options);
+  
+  humidityChart.draw();
+}
 
 // Constructor function for contecting to the MTQQ Amazon Server
 function SigV4Utils(){}
