@@ -64,7 +64,7 @@ function GetWidth(){
 window.onresize =  function(){
   humidityChart.options.width = GetWidth();
   console.log(humidityChart.options);
-  
+
   humidityChart.draw();
 }
 
@@ -344,4 +344,25 @@ var endpoint = createEndpoint(
       document.body.style.color = "#000";
    }*/
 
-   document.body.style.backgroundColor = "#333333";
+   // document.body.style.backgroundColor = "#333333";
+
+
+
+   // CHECKBOXAR
+
+   $('input[type=checkbox]').change(function(){
+     counter = 0;
+     clicked = $(this).data('index');
+     $('input[type=checkbox]').each(function(){
+       if($(this)[0].checked){
+         counter++;
+       }
+     });
+     if(counter==3){
+       toDisable = clicked;
+       while(toDisable==clicked){
+         toDisable=Math.round(Math.random()*2);
+       }
+       $("input:eq("+toDisable+")")[0].checked = false;
+     }
+   });

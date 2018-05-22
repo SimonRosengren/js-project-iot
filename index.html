@@ -7,16 +7,16 @@
    <!--JS-api for the database-->
    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
 
+
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
    <link rel="stylesheet" type="text/css" href="reset.css">
-   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
-
-
-   <link rel="stylesheet" type="text/css" href="main.css">
+   <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,700" rel="stylesheet">
    <!-- Bootstrap CSS -->
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
    crossorigin="anonymous">
+   <link rel="stylesheet" type="text/css" href="main.css">
+
 
    <title>Internet of Things - Lab</title>
 </head>
@@ -37,17 +37,28 @@
 
                <div class="climate-wrapper">
                   <div id="temp-wrapper">
-                     <div id="temp_chart_div" class="inner-cell"></div>
+                     <div class="graphnumberwrapper">
+                        <div id="temp_chart_div" class="inner-cell"></div>
+                        <div class="graphnumber">
+                           <p>22</p>
+                        </div>
+                     </div>
+
                      <p>Graph of the temperature</p>
                   </div>
-                  
                   <div id="humidity-wrapper">
                      <div id="humidity_chart_div" class="inner-cell"></div>
                      <p>Graph of the humidity</p>
                   </div>
 
                   <div id="pressure-wrapper">
-                     <div id="pressure_chart_div" class="inner-cell"></div>
+
+                     <div class="graphnumberwrapper">
+                        <div id="pressure_chart_div" class="inner-cell"></div>
+                        <div class="graphnumber">
+                           <p>24</p>
+                        </div>
+                     </div>
                      <p>Graph of the pressure</p>
                   </div>
                </div>
@@ -60,7 +71,7 @@
                      <div id="historical_temp_chart_div" class="inner-cell"></div>
                      <p>Graph of the historical temperature</p>
                   </div>
-   
+
 
                </div>
                <div id="humidity-wrapper">
@@ -98,6 +109,41 @@
             <div class="climate-tab-wrapper">
 
                <div class="climate-wrapper">
+                  <div class="wrap">
+                   <form action="#" method="post">
+                      <div class="checkboxes">
+
+
+                    <div class="block">
+                      <span>Sound level</span>
+                      <input data-index="0" id="soundlevel" type="checkbox" />
+                      <label for="soundlevel"></label>
+                    </div>
+                    <div class="block">
+                      <span>Temperature</span>
+                      <input data-index="1" id="temperature" type="checkbox" />
+                      <label for="temperature"></label>
+                    </div>
+                    <div class="block">
+                      <span>Pressure</span>
+                      <input data-index="2" id="pressure" type="checkbox" />
+                      <label for="pressure"></label>
+                    </div>
+                    <div class="block">
+                      <span>Light level</span>
+                      <input data-index="3" id="lightlevel" type="checkbox" />
+                      <label for="lightlevel"></label>
+                    </div>
+                    <div class="block">
+                      <span>Humidity</span>
+                      <input data-index="4" id="humidity" type="checkbox" />
+                      <label for="humidity"></label>
+                    </div>
+                    </div>
+
+                    <input type="submit" value="SHOW">
+                    </form>
+                  </div>
                   <div id="y-wrapper">
                      <div id="mashChart_div"></div>
                      <p>Mashup Graph</p>
