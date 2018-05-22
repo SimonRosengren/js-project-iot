@@ -41,8 +41,8 @@ function PressureChart(pressure) {
   this.setPressureValue = function (pressure) {
     this.data = google.visualization.arrayToDataTable([
       ['Pressure', 'psi'],
-      ['pressure', pressure],
-      ['rest', 4000 - pressure]
+      ['pressure', parseFloat(pressure)],
+      ['rest', 4000 - parseFloat(pressure)]
     ]);
     this.draw();
   }
@@ -119,10 +119,11 @@ function TemperatureChart() {
   // Set input data to the new tempature
   // Then draws the charts.
   this.setTemperature = function(temp) {
+
     data = google.visualization.arrayToDataTable([
       ['Temperature', 'C'],
-      ['temp', temp],
-      ['sda', 100 - temp]
+      ['temp', parseFloat(temp)],
+      ['sda', 100 - parseFloat(temp)]
     ]);
     this.draw();
   }
@@ -152,14 +153,9 @@ function HumidityChart(humidity) {
     backgroundColor: {
       fill: '#FF0000',
       fillOpacity: 0
-    },
+    }
   };
   var chart = new google.charts.Line(document.getElementById('humidity_chart_div'));
-  //  Function for the animation when the new value arrives
-  this.animationDur = function (time) {
-    options.animation = time;
-    console.log(options.animation)
-  }
 
   //  Draw the graph
   this.draw = function () {
