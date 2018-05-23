@@ -2,9 +2,9 @@
 
 function PressureChart(pressure) {
   this.data = google.visualization.arrayToDataTable([
-    ['Temperature', 'C'],
-    ['temp', pressure],
-    ['sda', 4000-pressure]
+    ['Pressure', 'psi'],
+    ['pressure', pressure],
+    ['rest', 4000-pressure]
   ]);
 
   // Design 
@@ -44,6 +44,7 @@ function PressureChart(pressure) {
       ['pressure', parseFloat(pressure)],
       ['rest', 4000 - parseFloat(pressure)]
     ]);
+    $('#pressurenumber').html(pressure);
     this.draw();
   }
 }
@@ -134,12 +135,13 @@ function TemperatureChart() {
   // Set input data to the new tempature
   // Then draws the charts.
   this.setTemperature = function(temp) {
-
+    tempInt = parseFloat(temp, 10)
     data = google.visualization.arrayToDataTable([
       ['Temperature', 'C'],
-      ['temp', temp],
-      ['rest', 100 - temp]
+      ['temp', tempInt],
+      ['rest', 100 - tempInt]
     ]);
+    $('#tempnumber').html(tempInt);
     this.draw();
   }
   // Draw the chart

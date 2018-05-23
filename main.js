@@ -166,7 +166,6 @@ var endpoint = createEndpoint(
       }
       else if(jsonMessage.uid === 'sensmitter_1'){
          iotObject = new SensmitterPressure(jsonMessage);
-         $('#pressurenumber').html(iotObject.pressure);
          pressureChart.setPressureValue(iotObject.pressure)
          humidityChart.addSensmitter1(iotObject.timestamp,iotObject.humidity);
       }
@@ -174,7 +173,6 @@ var endpoint = createEndpoint(
          iotObject = new SensmitterTemperature(jsonMessage);
          console.log(iotObject.temperature);
          temperatureChart.setTemperature(iotObject.temperature);
-         $('#tempnumber').html(iotObject.temperature);
 
          if(jsonMessage.uid === 'sensmitter_2'){
           humidityChart.addSensmitter2(iotObject.timestamp,iotObject.humidity);
