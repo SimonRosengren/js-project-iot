@@ -35,25 +35,36 @@ function PressureChart(pressure) {
 //  Function for the sound gauge
 function SoundLevelChart(soundLevel) {
   this.data = google.visualization.arrayToDataTable([
-    ['Label', 'Value'],
-    ['dB', soundLevel],
+    ['Sound', 'db'],
+    ['sound', soundLevel],
+    ['rest', 100-soundLevel]
   ]);
 
   //  Make width and height auto fit div
   var options = {
-    redColor: '#ff7575',
-    width: 160, height: 200,
-    redFrom: 55, redTo: 60,
-    minorTicks: 100,
-    max: 60,
-    min: 30,
+    legend: 'none',
+    pieSliceText: 'none',
+    pieStartAngle: 0,
+    pieSliceBorderColor: 'transparent',
+    backgroundColor: {
+      fillOpacity: 0
+    },
     animation: {
       duration: 2500,
       easing: 'inAndOut'
+    },
+    pieHole: 0.7,
+    tooltip: { trigger: 'none' },
+    pieSliceTextStyle: {
+      color: 'white', fontSize: 16
+    },
+    slices: {
+      0: { color: '#f77f2e' },
+      1: { color: 'transparent'}
     }
   };
 
-  var chart = new google.visualization.Gauge(document.getElementById('sound_chart_div'));
+  var chart = new google.visualization.PieChart(document.getElementById('sound_chart_div'));
 
   //  Draw the graph
   this.draw = function () {
@@ -61,7 +72,11 @@ function SoundLevelChart(soundLevel) {
   }
   //  Function to set the pressure when it's life
   this.setSoundLevel = function (soundLevel) {
-    this.data.setValue(0, 1, soundLevel);
+    this.data = google.visualization.arrayToDataTable([
+      ['Sound', 'C'],
+      ['sound', soundLevel],
+      ['rest', 100 - soundLevel]
+    ]);
     this.draw();
   }
 };
@@ -72,7 +87,7 @@ function TemperatureChart() {
   var data = google.visualization.arrayToDataTable([
     ['Temperature', 'C'],
     ['temp', 35],
-    ['sda', 100-35]
+    ['rest', 100-35]
   ]);
   // Design 
   var options = {
@@ -106,7 +121,7 @@ function TemperatureChart() {
     data = google.visualization.arrayToDataTable([
       ['Temperature', 'C'],
       ['temp', temp],
-      ['sda', 100 - temp]
+      ['rest', 100 - temp]
     ]);
     this.draw();
   }
