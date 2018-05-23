@@ -94,7 +94,7 @@ function SoundLevelChart(soundLevel) {
       ['sound', soundLevel],
       ['rest', 100 - soundLevel]
     ]);
-    $('#soundnumber').html(soundLevel);
+    $('#soundnumber').html(soundLevel + " dB");
     this.draw();
   }
 };
@@ -142,7 +142,7 @@ function TemperatureChart() {
       ['temp', tempInt],
       ['rest', 100 - tempInt]
     ]);
-    $('#tempnumber').html(tempInt + "°");
+    $('#tempnumber').html(tempInt + "°C");
     this.draw();
   }
   // Draw the chart
