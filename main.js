@@ -11,6 +11,9 @@ var iotObject;
 var humidityChart;
 var historicalTempLineChart;
 var historicalSoundScatterChart;
+var historicalHumidityChart;
+
+var mashUp;
 
 
 // When loaded then create all the charts
@@ -18,6 +21,7 @@ google.charts.setOnLoadCallback(()=>{
 
    //Creating a new TemperatureChart and calling it's draw function
    temperatureChart = new TemperatureChart(0);
+   temperatureChart.setTemperature(0);
    temperatureChart.draw();
 
    // Create a new SoundLevelChart and callings it's draw funtion
@@ -25,7 +29,7 @@ google.charts.setOnLoadCallback(()=>{
    soundChart.draw();
 
    // Create a new PressureChart and callings it's draw funtion
-   pressureChart = new PressureChart(1000);
+   pressureChart = new PressureChart(0);
    pressureChart.draw();
 
   // Create a new HumidityChart and callings it's draw funtion
@@ -43,8 +47,27 @@ google.charts.setOnLoadCallback(()=>{
    historicalSoundScatterChart = new HistoricalSoundAndTimeScatterChart();
    historicalSoundScatterChart.draw();
    fillScatterChartWithHistoricalData("SensorsIOTAPLab", historicalSoundScatterChart)
+
+
+   historicalHumidityChart = new HistoricalHumidityChart();
+   historicalHumidityChart.draw();
+   fillHistoricalHumidityChart("SensorsIOTAPLab",historicalHumidityChart);
 });
 
+
+mashUp = new ThreeDimMashUpChart();
+mashUp.draw();
+
+function GetWidth(){
+  return window.innerWidth * 0.4;
+}
+
+window.onresize =  function(){
+  humidityChart.options.width = GetWidth();
+  console.log(humidityChart.options);
+
+  humidityChart.draw();
+}
 
 // Constructor function for contecting to the MTQQ Amazon Server
 function SigV4Utils(){}
@@ -100,7 +123,6 @@ function createEndpoint(regionName, awsIotEndpoint, accessKey, secretKey) {
    console.log(connectionString);
    return connectionString;
 }
-
 var endpoint = createEndpoint(
    'us-east-1', // Your Region
    'a1y7d41s0oj85v.iot.us-east-1.amazonaws.com', // Require 'lowercamelcase'!!
@@ -131,7 +153,7 @@ var endpoint = createEndpoint(
       client.send(message);
       console.log("sent");
    }
-
+   
    //   Function to handle answers from the api
    function onMessage(message) {
       var jsonMessage = JSON.parse(message.payloadString);
@@ -144,12 +166,16 @@ var endpoint = createEndpoint(
       }
       else if(jsonMessage.uid === 'sensmitter_1'){
          iotObject = new SensmitterPressure(jsonMessage);
+         $('#pressurenumber').html(iotObject.pressure);
          pressureChart.setPressureValue(iotObject.pressure)
-         humidityChart.setHumidity(iotObject.timestamp,iotObject.humidity);
+         humidityChart.addSensmitter1(iotObject.timestamp,iotObject.humidity);
       }
       else if(jsonMessage.uid === 'sensmitter_2' || jsonMessage.uid === 'sensmitter_3'){
          iotObject = new SensmitterTemperature(jsonMessage);
-         temperatureChart.setTemperature(iotObject.temperature)
+         console.log(iotObject.temperature);
+         temperatureChart.setTemperature(iotObject.temperature);
+         $('#tempnumber').html(iotObject.temperature);
+
          if(jsonMessage.uid === 'sensmitter_2'){
           humidityChart.addSensmitter2(iotObject.timestamp,iotObject.humidity);
          }
@@ -171,6 +197,7 @@ var endpoint = createEndpoint(
          iotObject = new Ardunio(jsonMessage);
          humidityChart.addArdurino(iotObject.timestamp,iotObject.humidity);
          temperatureChart.setTemperature(iotObject.temperature)
+         $('#tempnumber').html(iotObject.temperature);
       }
       else if(jsonMessage.uid === 'axis_old_camera'){
          iotObject = new CameraAxis(jsonMessage);
@@ -322,4 +349,22 @@ var endpoint = createEndpoint(
       document.body.style.color = "#000";
    }*/
 
-   document.body.style.backgroundColor = "#333333";
+   // document.body.style.backgroundColor = "#333333";
+
+
+
+   // CHECKBOXAR
+   $('input[type=checkbox]').change(function(){
+    var counter = 0;
+    $('input[type=checkbox]').each(function(){
+      if($(this)[0].checked){
+        counter++;
+      }
+    });
+    if(counter==3){
+      setTimeout(()=>{
+        $(this)[0].checked = false;
+      },500)
+    }
+  });
+
