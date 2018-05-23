@@ -76,10 +76,45 @@ function fillHistoricalHumidityChart(table, humidityChart) {
                 if(data.Items[index].payload.uid === 'arduino_due_1'){
                     var t = new Date(0);
                     t.setSeconds(data.Items[index].payload.timestamp);
-                    arr.push([t, data.Items[index].payload.data.humidity])
+                    arr.push([t, data.Items[index].payload.data.humidity]);
                 }
             }
             humidityChart.addData(arr)
+        }
+    }
+}
+// Missing pressure
+function fillMashUpChart(table, chart, values) {
+    var params = {
+        TableName: table
+    };
+
+    docClient.scan(params, onScan);
+
+    function onScan(err, data) {
+        if (err) {
+            console.log(err)
+        } else {
+            var arr = []
+            for (let index = 0; index < data.Items.length; index ++) {
+                if(data.Items[index].payload.uid === 'arduino_due_1'){
+                    var t = new Date(0);
+                    t.setSeconds(data.Items[index].payload.timestamp);
+                    if(values.includes('temperature')){
+                        arr.push([t, data.Items[index].payload.data.temperature]);
+                    }
+                    if(values.includes('humidity')){
+                        arr.push([t, data.Items[index].payload.data.humidity]);
+                    }
+                    if(values.includes('soundlevel')){
+                        arr.push([t, data.Items[index].payload.data.sound_level]);
+                    }
+                    if(values.includes('lightlevel')){
+                        arr.push([t, data.Items[index].payload.data.x_light_level]);
+                    }
+                }
+            }
+            chart.addData(arr)
         }
     }
 }

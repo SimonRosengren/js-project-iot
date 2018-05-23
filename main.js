@@ -13,7 +13,7 @@ var historicalTempLineChart;
 var historicalSoundScatterChart;
 var historicalHumidityChart;
 
-var mashUp;
+var mashUpChart;
 
 
 // When loaded then create all the charts
@@ -52,11 +52,24 @@ google.charts.setOnLoadCallback(()=>{
    historicalHumidityChart = new HistoricalHumidityChart();
    historicalHumidityChart.draw();
    fillHistoricalHumidityChart("SensorsIOTAPLab",historicalHumidityChart);
+
+   mashUpChart = new MashUpChart();
+   mashUpChart.draw();
 });
 
+$('#formMashUp').submit( (event) =>{
+  event.preventDefault();
+  mashUpChart.clearData();
+  var values = [];
+  values.push('Date');
+  $('input[type=checkbox]').each(function(){
+    if($(this)[0].checked){
+      values.push($(this)[0].id);
+    }
+  });
+  fillMashUpChart("SensorsIOTAPLab",mashUpChart,values);
+})
 
-mashUp = new ThreeDimMashUpChart();
-mashUp.draw();
 
 function GetWidth(){
   return window.innerWidth * 0.4;
@@ -359,7 +372,7 @@ var endpoint = createEndpoint(
         counter++;
       }
     });
-    if(counter==3){
+    if(counter >= 3){
       setTimeout(()=>{
         $(this)[0].checked = false;
       },500)

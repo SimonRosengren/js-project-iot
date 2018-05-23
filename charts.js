@@ -309,79 +309,44 @@ function HistoricalSoundAndTimeScatterChart() {
     this.chart.draw(this.data, google.charts.Line.convertOptions(this.options));
   }
 }
-function ThreeDimMashUpChart () {
-  //Olika types : mesh3d,scatter3d. Som vi kan använda
+function MashUpChart () {
   
-  this.x = [];
-  this.y = [];
-  this.z = [];
-  this.x2 = [];
-  this.y2 = [];
-  this.z2 = [];
-  var trace = {
-    x: this.x,
-    y: this.y,
-    z: this.z,
-    marker: {
-        color: '#bcbd22',
-        size: 1,
-        symbol: 'circle',
-        line: {
-          color: 'rgb(0,0,0)',
-          width: 0
-        }},
-      line: {
-        color: '#bcbd22',
-        width: 1
-      },
-      type: 'scatter3d'
+  this.data = new google.visualization.DataTable();
+  this.data.addColumn('date', 'Date');
+  this.data.addColumn('number', 'MashUp');
+
+  //  Design options
+  this.options = {
+
+    backgroundColor: { // I cant change the damn color____!_)@!!)1
+      fill: 'transparent'
+    },
+    chart: {
+      title: 'MashUp / Date',
+    },
+    hAxis: { title: 'Date' },
+    vAxis: { title: 'MashUp' },
+
+
+  };
+
+
+  this.chart = new google.visualization.LineChart(document.getElementById('mashChart_div'));
+
+  //  Add historical data to the graph
+  this.addData = function (tempData) {
+    this.data.addRows(tempData)
+    this.draw();
   }
-  var trace2 = {
-     x: this.x2,
-     y: this.y2,
-     z: this.z2,
-     marker: {
-        color: '#bcbd22',
-        size: 1,
-        symbol: 'circle',
-        line: {
-          color: 'rgb(0,0,0)',
-          width: 0
-        }},
-      line: {
-        color: '#bcbd22',
-        width: 1
-      },
-      type: 'scatter3d'
+  this.clearData = function(){
+    this.data = new google.visualization.DataTable();
+    this.data.addColumn('date', 'Date');
+    this.data.addColumn('number', 'MashUp');
   }
-  var layout = {
-    paper_bgcolor: '#7f7f7f',
-    plot_bgcolor: '#c7c7c7'
-  }
-  var itorator = 0;
-  this.addPointToLineOne = function(x,y){
-    this.x.push(x);
-    this.y.push(y);
-    this.z.push(itorator++);
-  }
-  var itor = 0;
-  this.addPointToLineTwo = function(x,y){
-    this.x2.push(x);
-    this.y2.push(y);
-    this.z2.push(itor++);
-  }
-  
-  for(var i = 0; i < 66; i++){
-    this.addPointToLineOne(i + 3, i);
-  }
-  for(var i = 0; i < 66; i++){
-    this.addPointToLineTwo(i + 50, i);
-  }
-  var data = [trace,trace2];
-  console.log(data);
-  this.draw = function(){
-    Plotly.plot('mashChart_div',data,layout);
-   }
+  // Function to draw graph
+  this.draw = function () {
+    this.chart.draw(this.data, google.charts.Line.convertOptions(this.options));
+    }
   }
 
 //  Function for historical humidity graph
@@ -414,6 +379,7 @@ function HistoricalHumidityChart() {
     this.data.addRows(tempData)
     this.draw();
   }
+
 
   // Function to draw graph
   this.draw = function () {
