@@ -311,10 +311,15 @@ function HistoricalSoundAndTimeScatterChart() {
 }
 function MashUpChart () {
   
-  this.data = new google.visualization.DataTable();
-  this.data.addColumn('date', 'Date');
-  this.data.addColumn('number', 'MashUp');
+  var tableData = [
+    ['Time', 'Humidity', 'Temp'],
+    ['', 0, 0],
+    ['', 15, 156],
+    ['', null, 1231],
+    ['', 23, 43]
+  ];
 
+  this.data = google.visualization.arrayToDataTable(tableData);
   //  Design options
   this.options = {
 
@@ -331,17 +336,16 @@ function MashUpChart () {
   };
 
 
-  this.chart = new google.visualization.LineChart(document.getElementById('mashChart_div'));
+  this.chart = new google.charts.Scatter(document.getElementById('mashChart_div'));
 
   //  Add historical data to the graph
-  this.addData = function (tempData) {
-    this.data.addRows(tempData)
+  this.addData = function (data) {
+    tableData = data;
+    this.data = google.visualization.arrayToDataTable(tableData);
     this.draw();
   }
   this.clearData = function(){
-    this.data = new google.visualization.DataTable();
-    this.data.addColumn('date', 'Date');
-    this.data.addColumn('number', 'MashUp');
+  
   }
   // Function to draw graph
   this.draw = function () {
