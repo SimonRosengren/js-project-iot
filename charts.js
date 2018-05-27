@@ -344,9 +344,6 @@ function MashUpChart () {
     this.data = google.visualization.arrayToDataTable(tableData);
     this.draw();
   }
-  this.clearData = function(){
-  
-  }
   // Function to draw graph
   this.draw = function () {
     this.chart.draw(this.data, google.charts.Line.convertOptions(this.options));

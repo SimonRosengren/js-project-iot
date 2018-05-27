@@ -59,7 +59,6 @@ google.charts.setOnLoadCallback(()=>{
 
 $('#formMashUp').submit( (event) =>{
   event.preventDefault();
-  mashUpChart.clearData();
   var values = [];
   values.push('Date');
   $('input[type=checkbox]').each(function(){
