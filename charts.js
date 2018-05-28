@@ -322,7 +322,7 @@ function MashUpChart () {
   this.data = google.visualization.arrayToDataTable(tableData);
   //  Design options
   this.options = {
-
+    height: setHeight(0.5),
     backgroundColor: { // I cant change the damn color____!_)@!!)1
       fill: 'transparent'
     },

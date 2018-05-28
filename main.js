@@ -14,7 +14,7 @@ var historicalSoundScatterChart;
 var historicalHumidityChart;
 
 var mashUpChart;
-
+$('#popup').hide();
 
 // When loaded then create all the charts
 google.charts.setOnLoadCallback(()=>{
@@ -69,16 +69,17 @@ $('#formMashUp').submit( (event) =>{
   fillMashUpChart("SensorsIOTAPLab",mashUpChart,values);
 })
 
-
+function setHeight(flaot) {
+  return window.innerHeight * flaot;
+}
 // function GetWidth(){
 //   return window.innerWidth * 0.4;
 // }
 
 window.onresize =  function(){
   // humidityChart.options.width = GetWidth();
-  console.log(humidityChart.options);
 
-  humidityChart.draw();
+  //humidityChart.draw();
 }
 
 // Constructor function for contecting to the MTQQ Amazon Server
@@ -183,7 +184,6 @@ var endpoint = createEndpoint(
       }
       else if(jsonMessage.uid === 'sensmitter_2' || jsonMessage.uid === 'sensmitter_3'){
          iotObject = new SensmitterTemperature(jsonMessage);
-         console.log(iotObject.temperature);
          temperatureChart.setTemperature(iotObject.temperature);
 
          if(jsonMessage.uid === 'sensmitter_2'){
@@ -372,8 +372,15 @@ var endpoint = createEndpoint(
       }
     });
     if(counter >= 3){
+      $('#popup').show();
+      var popper = new Popper($('#h1mashup'),$('#popup'),{
+        placement:'bottom'
+      });
       setTimeout(()=>{
         $(this)[0].checked = false;
+        setTimeout(() => {
+          $('#popup').hide();
+        },1500)
       },500)
     }
   });

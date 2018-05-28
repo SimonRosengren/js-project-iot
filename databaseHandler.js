@@ -98,7 +98,6 @@ function fillMashUpChart(table, chart, values) {
             var arr = [];
             arr.push(values);
             for (let index = 0; index < data.Items.length; index ++) {
-                console.log(data.Items[index]);
                 if(data.Items[index].payload.uid === 'arduino_due_1'){
                     var t = new Date(0);
                     t.setSeconds(data.Items[index].payload.timestamp);
