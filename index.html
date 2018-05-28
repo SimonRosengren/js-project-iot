@@ -26,7 +26,7 @@
       <ol class="carousel-indicators" id="indicator">
          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active">Climate</li>
          <li data-target="#carouselExampleIndicators" data-slide-to="1">Lab Activity</li>
-         <li data-target="#carouselExampleIndicators" data-slide-to="2">Persons</li>
+         <li data-target="#carouselExampleIndicators" data-slide-to="2">Mashup</li>
       </ol>
       <div class="carousel-inner">
          <div class="carousel-item active">
@@ -44,11 +44,11 @@
                         </div>
                      </div>
 
-                     <p>Graph of the temperature</p>
+                     <p>Temperature</p>
                   </div>
                   <div id="humidity-wrapper">
                      <div id="humidity_chart_div" class="inner-cell"></div>
-                     <p>Graph of the humidity</p>
+                     <p>Humidity</p>
                   </div>
 
                   <div id="pressure-wrapper">
@@ -59,7 +59,7 @@
                            <p id="pressurenumber">0</p>
                         </div>
                      </div>
-                     <p>Graph of the pressure</p>
+                     <p>Pressure</p>
                   </div>
                </div>
                <div class="climate-wrapper">
@@ -69,11 +69,11 @@
                         <input id="date-end" type="date" class="date">
                      </form>
                      <div id="historical_temp_chart_div" class="inner-cell"></div>
-                     <p>Graph of the historical temperature</p>
+                     <p>Historical temperature</p>
                      <div id="historical_humidity_chart_div" class="inner-cell"></div>
-                     <p>Graph of the humidity</p>
+                     <p>Historical humidity</p>
                   </div>
-               
+
                </div>
 
             </div>
@@ -88,7 +88,6 @@
                <div class="climate-wrapper">
                   <div id="labstate-wrapper">
                      <div id="labstate"><h2>Searching for lab status</h2></div>
-                     <p>Graph of the labstatus</p>
                   </div>
                   <div id="sound-wrapper">
                     <div class="graphnumberwrapper">
@@ -97,18 +96,23 @@
                            <p id="soundnumber">0</p>
                         </div>
                      </div>
-                     <p>Graph of the sound</p>
+                     <p>Sound</p>
+                  </div>
+                  <div id="x-wrapper">
+                     <div id="historical_sound_chart_div"></div>
+                     <p>Historical sound</p>
                   </div>
                   <div id="ligth-wrapper">
-                     <div id="sound_chart_div" class="inner-cell"></div>
+                     <div id="light_chart_div" class="inner-cell"></div>
                      <p>Graph of the light</p>
                   </div>
+
                </div>
             </div>
          </div>
          <div class="carousel-item">
             <!--Slide page 3-->
-            <h1>Persons</h1>
+            <h1>Mashup</h1>
             <div class="climate-tab-wrapper">
 
                <div class="climate-wrapper">
@@ -144,18 +148,16 @@
                     </div>
                     </div>
 
+
+
+                    <input type="submit" value="SHOW">
+                    </form>
                     <div id="y-wrapper">
                       <div id="mashChart_div"></div>
                       <p>Mashup Graph</p>
                    </div>
+                  </div>
 
-                    <input type="submit" value="SHOW">
-                    </form>
-                  </div>
-                  <div id="x-wrapper">
-                     <div id="historical_sound_chart_div"></div>
-                     <p>Graph of the camera</p>
-                  </div>
                </div>
             </div>
          </div>

@@ -7,7 +7,7 @@ function PressureChart(pressure) {
     ['rest', 4000-pressure]
   ]);
 
-  // Design 
+  // Design
   var options = {
     legend: 'none',
     pieSliceText: 'none',
@@ -107,7 +107,7 @@ function TemperatureChart() {
     ['temp', 35],
     ['rest', 100-35]
   ]);
-  // Design 
+  // Design
   var options = {
     legend: 'none',
     pieSliceText: 'none',
@@ -167,7 +167,7 @@ function HumidityChart(humidity) {
   //  Design options
   this.options = {
     title: 'Live Humidity',
-    width: GetWidth(),
+    // width: GetWidth(),
     backgroundColor: {
       fill: '#FF0000',
       fillOpacity: 0
@@ -310,7 +310,7 @@ function HistoricalSoundAndTimeScatterChart() {
   }
 }
 function MashUpChart () {
-  
+
   var tableData = [
     ['Time', 'Humidity', 'Temp'],
     ['', 0, 0],

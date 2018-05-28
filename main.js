@@ -70,12 +70,12 @@ $('#formMashUp').submit( (event) =>{
 })
 
 
-function GetWidth(){
-  return window.innerWidth * 0.4;
-}
+// function GetWidth(){
+//   return window.innerWidth * 0.4;
+// }
 
 window.onresize =  function(){
-  humidityChart.options.width = GetWidth();
+  // humidityChart.options.width = GetWidth();
   console.log(humidityChart.options);
 
   humidityChart.draw();
@@ -165,7 +165,7 @@ var endpoint = createEndpoint(
       client.send(message);
       console.log("sent");
    }
-   
+
    //   Function to handle answers from the api
    function onMessage(message) {
       var jsonMessage = JSON.parse(message.payloadString);
@@ -377,4 +377,3 @@ var endpoint = createEndpoint(
       },500)
     }
   });
-
