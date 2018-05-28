@@ -98,33 +98,52 @@ function fillMashUpChart(table, chart, values) {
             var arr = [];
             arr.push(values);
             for (let index = 0; index < data.Items.length; index ++) {
+                console.log(data.Items[index]);
                 if(data.Items[index].payload.uid === 'arduino_due_1'){
                     var t = new Date(0);
                     t.setSeconds(data.Items[index].payload.timestamp);
-                    if(values[1] === 'temperature'){
-                        arr.push([t,data.Items[index].payload.data.temperature,null]);
+                    if(values.length === 2){
+                        if(values[1] === 'temperature'){
+                            arr.push([t,data.Items[index].payload.data.temperature]);
+                        }
+                        else if(values[1] === 'humidity'){
+                            arr.push([t,data.Items[index].payload.data.humidity]);
+                        }
+                        else if(values[1] === 'soundlevel'){
+                            arr.push([t,data.Items[index].payload.data.sound_level]);
+                        }
+                        else if(values[1] === 'lightlevel'){
+                            arr.push([t,data.Items[index].payload.data.x_light_level]);
+                        }
                     }
-                    else if(values[1] === 'humidity'){
-                        arr.push([t,data.Items[index].payload.data.humidity,null]);
+                    else if(values.length > 2){
+                        if(values[1] === 'temperature'){
+                            arr.push([t,data.Items[index].payload.data.temperature,null]);
+                        }
+                        else if(values[1] === 'humidity'){
+                            arr.push([t,data.Items[index].payload.data.humidity,null]);
+                        }
+                        else if(values[1] === 'soundlevel'){
+                            arr.push([t,data.Items[index].payload.data.sound_level,null]);
+                        }
+                        else if(values[1] === 'lightlevel'){
+                            arr.push([t,data.Items[index].payload.data.x_light_level,null]);
+                        }
+                        
+                        if (values[2] === 'temperature'){
+                            arr.push([t,null,data.Items[index].payload.data.temperature]);
+                        }
+                        else if(values[2] === 'humidity'){
+                            arr.push([t,null,data.Items[index].payload.data.humidity]);
+                        }
+                        else if(values[2] === 'soundlevel'){
+                            arr.push([t,null,data.Items[index].payload.data.sound_level]);
+                        }
+                        else if(values[2] === 'lightlevel'){
+                            arr.push([t,null,data.Items[index].payload.data.x_light_level]);
+                        }
                     }
-                    else if(values[1] === 'soundlevel'){
-                        arr.push([t,data.Items[index].payload.data.sound_level,null]);
-                    }
-                    else if(values[1] === 'lightlevel'){
-                        arr.push([t,data.Items[index].payload.data.x_light_level,null]);
-                    }
-                    if (values[2] === 'temperature'){
-                        arr.push([t,null,data.Items[index].payload.data.temperature]);
-                    }
-                    else if(values[2] === 'humidity'){
-                        arr.push([t,null,data.Items[index].payload.data.humidity]);
-                    }
-                    else if(values[2] === 'soundlevel'){
-                        arr.push([t,null,data.Items[index].payload.data.sound_level]);
-                    }
-                    else if(values[2] === 'lightlevel'){
-                        arr.push([t,null,data.Items[index].payload.data.x_light_level]);
-                    }
+
                 }
             }
             chart.addData(arr)

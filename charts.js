@@ -327,10 +327,10 @@ function MashUpChart () {
       fill: 'transparent'
     },
     chart: {
-      title: 'MashUp / Date',
+      title: 'Mashup / Date',
     },
     hAxis: { title: 'Date' },
-    vAxis: { title: 'MashUp' },
+    vAxis: { title: 'Mashup' },
 
 
   };
