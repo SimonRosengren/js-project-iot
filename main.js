@@ -377,3 +377,10 @@ var endpoint = createEndpoint(
       },500)
     }
   });
+//Date picker
+datepickerDefault = new MtrDatepicker({
+  target: "from",
+});
+datepickerDefault = new MtrDatepicker({
+  target: "to",
+});

@@ -219,6 +219,14 @@ label:before{
   border-radius:100px;
 }
 
+/*Date picker*/
+#date-pickers{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+}
+
 /* Styles for screens under 850px */
 @media only screen and (max-width: 850px) {
    .carousel-indicators{
