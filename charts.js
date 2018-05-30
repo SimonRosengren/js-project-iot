@@ -51,12 +51,13 @@ function PressureChart(pressure) {
 
 //  Function for the sound gauge
 function SoundLevelChart(soundLevel) {
+ 
   this.data = google.visualization.arrayToDataTable([
     ['Sound', 'db'],
     ['sound', soundLevel],
     ['rest', 100-soundLevel]
   ]);
-
+  
   //  Make width and height auto fit div
   var options = {
     legend: 'none',
@@ -154,9 +155,9 @@ function TemperatureChart() {
 
 //  Function for the humidity graph
 
-function HumidityChart(humidity) {
+function HumidityLightChart(type,div) {
   var tableData = [
-    ['Time', 'Sens 1', 'Sen 2', 'Sens 3', 'Ardur'],
+    ['Time', 'Sens 1', 'Sens 2', 'Sens 3', 'Arduino'],
     ['', 0, 0, 0, 0]
   ];
   this.data = google.visualization.arrayToDataTable(tableData);
@@ -166,14 +167,14 @@ function HumidityChart(humidity) {
   this.ardurino = 0;
   //  Design options
   this.options = {
-    title: 'Live Humidity',
+    title: 'Live  ' +  type,
     // width: GetWidth(),
     backgroundColor: {
       fill: '#FF0000',
       fillOpacity: 0
     }
   };
-  var chart = new google.charts.Line(document.getElementById('humidity_chart_div'));
+  var chart = new google.charts.Line(document.getElementById(div));
 
   //  Draw the graph
   this.draw = function () {

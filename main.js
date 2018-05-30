@@ -12,6 +12,7 @@ var humidityChart;
 var historicalTempLineChart;
 var historicalSoundScatterChart;
 var historicalHumidityChart;
+var lightLevelChart;
 
 var mashUpChart;
 $('#popup').hide();
@@ -33,7 +34,7 @@ google.charts.setOnLoadCallback(()=>{
    pressureChart.draw();
 
   // Create a new HumidityChart and callings it's draw funtion
-   humidityChart = new HumidityChart(10);
+   humidityChart = new HumidityLightChart('Humidity','humidity_chart_div');
    humidityChart.draw();
 
   // Create a new HistoricalTemperatureLineChart and callings it's draw funtion,
@@ -55,6 +56,9 @@ google.charts.setOnLoadCallback(()=>{
 
    mashUpChart = new MashUpChart();
    mashUpChart.draw();
+
+   lightLevelChart = new HumidityLightChart('Light Level','light_chart_div');
+   lightLevelChart.draw();
 });
 
 $('#formMashUp').submit( (event) =>{
@@ -181,6 +185,7 @@ var endpoint = createEndpoint(
          iotObject = new SensmitterPressure(jsonMessage);
          pressureChart.setPressureValue(iotObject.pressure)
          humidityChart.addSensmitter1(iotObject.timestamp,iotObject.humidity);
+         lightLevelChart.addSensmitter1(iotObject.timestamp,iotObject.light_level);
       }
       else if(jsonMessage.uid === 'sensmitter_2' || jsonMessage.uid === 'sensmitter_3'){
          iotObject = new SensmitterTemperature(jsonMessage);
@@ -188,9 +193,11 @@ var endpoint = createEndpoint(
 
          if(jsonMessage.uid === 'sensmitter_2'){
           humidityChart.addSensmitter2(iotObject.timestamp,iotObject.humidity);
+          lightLevelChart.addSensmitter2(iotObject.timestamp,iotObject.light_level);
          }
          else if(jsonMessage.uid === 'sensmitter_3'){
           humidityChart.addSensmitter3(iotObject.timestamp,iotObject.humidity);
+          lightLevelChart.addSensmitter3(iotObject.timestamp,iotObject.light_level);
          }
       }
       else if(jsonMessage.uid === 'lab_state'){
@@ -205,6 +212,7 @@ var endpoint = createEndpoint(
       }
       else if(jsonMessage.uid === 'arduino_due_1'){
          iotObject = new Ardunio(jsonMessage);
+         lightLevelChart.addArdurino(iotObject.timestamp,iotObject.lightLevel);
          humidityChart.addArdurino(iotObject.timestamp,iotObject.humidity);
          temperatureChart.setTemperature(iotObject.temperature)
          $('#tempnumber').html(iotObject.temperature);
