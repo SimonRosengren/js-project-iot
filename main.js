@@ -20,6 +20,8 @@ $('#popup').hide();
 // When loaded then create all the charts
 google.charts.setOnLoadCallback(()=>{
 
+
+
    //Creating a new TemperatureChart and calling it's draw function
    temperatureChart = new TemperatureChart(0);
    temperatureChart.setTemperature(0);
@@ -41,24 +43,28 @@ google.charts.setOnLoadCallback(()=>{
   // and fill it with database.
    historicalTempLineChart = new HistoricalTemperatureLineChart();
    historicalTempLineChart.draw();
-   fillWithHistoricalData("SensorsIOTAPLab", historicalTempLineChart);
 
   // Create a new HistoricalSoundAndTimeScatterChart and callings it's draw funtion,
   // and fill it with data from database.
    historicalSoundScatterChart = new HistoricalSoundAndTimeScatterChart();
    historicalSoundScatterChart.draw();
-   fillScatterChartWithHistoricalData("SensorsIOTAPLab", historicalSoundScatterChart)
 
 
    historicalHumidityChart = new HistoricalHumidityChart();
    historicalHumidityChart.draw();
-   fillHistoricalHumidityChart("SensorsIOTAPLab",historicalHumidityChart);
 
    mashUpChart = new MashUpChart();
    mashUpChart.draw();
 
    lightLevelChart = new HumidityLightChart('Light Level','light_chart_div');
    lightLevelChart.draw();
+
+   getHistoricalData('SensorsIOTAPLab').then((data) => {
+    console.log(data);
+    historicalHumidityChart.addData(fillHistoricalHumidityChart(data.Items));
+    historicalSoundScatterChart.addData(fillScatterChartWithHistoricalData(data.Items));
+    historicalTempLineChart.addData(fillWithHistoricalData(data.Items));
+  });
 });
 
 $('#formMashUp').submit( (event) =>{
