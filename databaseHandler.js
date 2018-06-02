@@ -8,9 +8,6 @@ AWS.config.update({
 
 var docClient = new AWS.DynamoDB.DocumentClient();
 
-
-var awsHistoricalData = {};
-
 function getHistoricalData(table) {
     return new Promise((resolve, reject) => {
         var params = {

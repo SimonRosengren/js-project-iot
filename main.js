@@ -20,8 +20,6 @@ $('#popup').hide();
 // When loaded then create all the charts
 google.charts.setOnLoadCallback(()=>{
 
-
-
    //Creating a new TemperatureChart and calling it's draw function
    temperatureChart = new TemperatureChart(0);
    temperatureChart.setTemperature(0);
@@ -64,6 +62,11 @@ google.charts.setOnLoadCallback(()=>{
     historicalHumidityChart.addData(fillHistoricalHumidityChart(data.Items));
     historicalSoundScatterChart.addData(fillScatterChartWithHistoricalData(data.Items));
     historicalTempLineChart.addData(fillWithHistoricalData(data.Items));
+    $('#loadergif').hide();
+    $('#content').show();
+    historicalHumidityChart.draw();
+    historicalSoundScatterChart.draw();
+    historicalTempLineChart.draw();
   });
 });
 
