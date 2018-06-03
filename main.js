@@ -62,7 +62,7 @@ google.charts.setOnLoadCallback(()=>{
     historicalHumidityChart.addData(fillHistoricalHumidityChart(data.Items));
     historicalSoundScatterChart.addData(fillScatterChartWithHistoricalData(data.Items));
     historicalTempLineChart.addData(fillWithHistoricalData(data.Items));
-    $('#loadergif').hide();
+    $('#loader').hide();
     $('#content').show();
     historicalHumidityChart.draw();
     historicalSoundScatterChart.draw();
