@@ -401,10 +401,19 @@ var endpoint = createEndpoint(
       },500)
     }
   });
+
 //Date picker
-datepickerDefault = new MtrDatepicker({
+var datePickerFrom = new MtrDatepicker({
   target: "from",
 });
-datepickerDefault = new MtrDatepicker({
+var datePickerTo = new MtrDatepicker({
   target: "to",
 });
+
+datePickerFrom.onChange('all', onDatePickerChange);
+datePickerTo.onChange('all', onDatePickerChange);
+
+
+function onDatePickerChange() {
+  console.log(datePickerFrom.toUTCString() + "->" + datePickerTo.toUTCString())
+} 
